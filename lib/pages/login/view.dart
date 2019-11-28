@@ -32,7 +32,9 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                 '立即登录',
                 style: TextStyle(fontSize: 18),
               ),
-              onPressed: () {},
+              onPressed: () {
+                dispatch(LoginActionCreator.onLogin());
+              },
             ),
           ),
         ),
