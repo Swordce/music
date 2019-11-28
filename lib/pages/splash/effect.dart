@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/widgets.dart' hide Action;
+import 'package:music/application.dart';
 import 'action.dart';
 import 'state.dart';
 
@@ -16,7 +17,8 @@ Effect<SplashState> buildEffect() {
 void _onAction(Action action, Context<SplashState> ctx) {
 }
 
-void _onLogin(Action action,Context<SplashState> ctx) {
+void _onLogin(Action action,Context<SplashState> ctx) async {
+  await Application.initSp();
   Navigator.of(ctx.context).popAndPushNamed("login_page",arguments: null);
 }
 
