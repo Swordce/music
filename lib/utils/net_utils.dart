@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class NetUtils {
   static NetUtils instance;
   static final String baseUrl = 'http://10.0.16.239:3000';
+//  static final String baseUrl = 'http://10.11.65.129:3000';
   Dio dio;
   BaseOptions options;
 
@@ -69,14 +71,8 @@ class NetUtils {
     try {
       response = await dio.get(url,
           queryParameters: data, options: options, cancelToken: cancelToken);
-      print('get success---------${response.data}');
-//      response.data; 响应体
-//      response.headers; 响应头
-//      response.request; 请求体
-//      response.statusCode; 状态码
-
     } on DioError catch (e) {
-      print('get error---------$e');
+      Fluttertoast.showToast(msg: '服务器连接错误',toastLength: Toast.LENGTH_SHORT);
       formatError(e);
     }
     return response;

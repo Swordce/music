@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'action.dart';
 import 'state.dart';
 
-Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
+Widget buildView(PreLoginState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
     backgroundColor: Color(0xFFDC2C1F),
     body: Stack(
@@ -33,7 +33,7 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                 style: TextStyle(fontSize: 18),
               ),
               onPressed: () {
-                dispatch(LoginActionCreator.onLogin());
+                dispatch(PreLoginActionCreator.onPreLogin());
               },
             ),
           ),
@@ -46,7 +46,7 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
             height: 45,
             child: OutlineButton(
               borderSide: BorderSide(
-                color: Colors.white
+                  color: Colors.white
               ),
               shape: StadiumBorder(),
               textColor: Colors.white,
@@ -55,7 +55,7 @@ Widget buildView(LoginState state, Dispatch dispatch, ViewService viewService) {
                 style: TextStyle(fontSize: 18),
               ),
               onPressed: () {
-                dispatch(LoginActionCreator.onSkipLogin());
+                dispatch(PreLoginActionCreator.onSkipLogin());
               },
             ),
           ),

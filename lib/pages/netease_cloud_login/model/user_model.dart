@@ -1,15 +1,16 @@
 import 'dart:convert';
 
 import 'package:music/application.dart';
-import 'package:music/pages/login/model/user_entity.dart';
 import 'package:music/utils/net_utils.dart';
 
-class UserModel {
+import 'user_entity.dart';
+
+class NeteaseCloudUserModel {
   // GET 请求
-  static Future<UserEntity> login(String phone, String password) async {
-    UserEntity user;
+  static Future<NeteaseCloudUserEntity> login(String phone, String password) async {
+    NeteaseCloudUserEntity user;
     var userInfo = Application.sp.getString('user');
-    if (userInfo.isNotEmpty) {
+    if (userInfo != null && userInfo.isNotEmpty) {
       user = parseUser(userInfo);
     } else {
       var response = await NetUtils.getInstance().get("/login/cellphone",
@@ -19,8 +20,8 @@ class UserModel {
     return user;
   }
 
-  static UserEntity parseUser(String user) {
+  static NeteaseCloudUserEntity parseUser(String user) {
     final jsonMap = json.decode(user);
-    return UserEntity.fromJson(jsonMap);
+    return NeteaseCloudUserEntity.fromJson(jsonMap);
   }
 }

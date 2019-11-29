@@ -1,14 +1,17 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:music/pages/home/page.dart';
-import 'package:music/pages/login/page.dart';
+import 'package:music/pages/pre_login/page.dart';
 import 'package:music/pages/splash/page.dart';
+
+import 'pages/netease_cloud_login/page.dart';
 
 Widget createApp() {
   final AbstractRoutes routes = PageRoutes(
     pages: <String, Page<Object, dynamic>>{
       'splash_page':SplashPage(),
-      'login_page':LoginPage(),
+      'pre_login_page':PreLoginPage(),
+      'login_page':NeteaseCloudLoginPage(),
       'home_page':HomePage(),
     },
   );

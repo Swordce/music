@@ -19,7 +19,7 @@ void _onAction(Action action, Context<SplashState> ctx) {
 
 void _onLogin(Action action,Context<SplashState> ctx) async {
   await Application.initSp();
-  Navigator.of(ctx.context).popAndPushNamed("login_page",arguments: null);
+  Navigator.of(ctx.context).popAndPushNamed("pre_login_page",arguments: null);
 }
 
 void _initCountDownTimerState(Action action,Context<SplashState> ctx) {

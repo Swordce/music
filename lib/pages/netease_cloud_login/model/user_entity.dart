@@ -1,4 +1,4 @@
-class UserEntity {
+class NeteaseCloudUserEntity {
 	int code;
 	int loginType;
 	String message;
@@ -6,9 +6,9 @@ class UserEntity {
 	List<UserBinding> bindings;
 	UserAccount account;
 
-	UserEntity({this.code, this.loginType, this.message,this.profile, this.bindings, this.account});
+	NeteaseCloudUserEntity({this.code, this.loginType, this.message,this.profile, this.bindings, this.account});
 
-	UserEntity.fromJson(Map<String, dynamic> json) {
+	NeteaseCloudUserEntity.fromJson(Map<String, dynamic> json) {
 		code = json['code'];
 		message = json['message'];
 		loginType = json['loginType'];

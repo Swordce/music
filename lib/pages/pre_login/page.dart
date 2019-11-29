@@ -5,18 +5,18 @@ import 'reducer.dart';
 import 'state.dart';
 import 'view.dart';
 
-class LoginPage extends Page<LoginState, Map<String, dynamic>> {
-  LoginPage()
+class PreLoginPage extends Page<PreLoginState, Map<String, dynamic>> {
+  PreLoginPage()
       : super(
             initState: initState,
             effect: buildEffect(),
             reducer: buildReducer(),
             view: buildView,
-            dependencies: Dependencies<LoginState>(
+            dependencies: Dependencies<PreLoginState>(
                 adapter: null,
-                slots: <String, Dependent<LoginState>>{
+                slots: <String, Dependent<PreLoginState>>{
                 }),
-            middleware: <Middleware<LoginState>>[
+            middleware: <Middleware<PreLoginState>>[
             ],);
 
 }
