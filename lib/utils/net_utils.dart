@@ -2,10 +2,12 @@ import 'dart:io';
 
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:music/widgets/loading.dart';
 
 class NetUtils {
-  static NetUtils instance;
+  static NetUtils netUtils;
   static final String baseUrl = 'http://10.0.16.239:3000';
 //  static final String baseUrl = 'http://10.11.65.129:3000';
   Dio dio;
@@ -14,8 +16,8 @@ class NetUtils {
   CancelToken cancelToken = CancelToken();
 
   static NetUtils getInstance() {
-    if (null == instance) instance = NetUtils();
-    return instance;
+    if (null == netUtils) netUtils = NetUtils();
+    return netUtils;
   }
 
   /*
@@ -49,14 +51,17 @@ class NetUtils {
     //添加拦截器
     dio.interceptors
         .add(InterceptorsWrapper(onRequest: (RequestOptions options) {
+//          Loading.showLoading(context);
       print("请求之前");
       // Do something before request is sent
       return options; //continue
     }, onResponse: (Response response) {
+//          Loading.hideLoading(context);
       print("响应之前");
       // Do something with response data
       return response; // continue
     }, onError: (DioError e) {
+//      Loading.hideLoading(context);
       print("错误之前");
       // Do something with response error
       return e; //continue
@@ -72,7 +77,6 @@ class NetUtils {
       response = await dio.get(url,
           queryParameters: data, options: options, cancelToken: cancelToken);
     } on DioError catch (e) {
-      Fluttertoast.showToast(msg: '服务器连接错误',toastLength: Toast.LENGTH_SHORT);
       formatError(e);
     }
     return response;

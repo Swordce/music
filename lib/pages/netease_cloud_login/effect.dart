@@ -20,28 +20,32 @@ Effect<NeteaseCloudLoginState> buildEffect() {
 void _onLoginAction(Action action, Context<NeteaseCloudLoginState> ctx) async {
   String phone = ctx.state.phoneContronller.text;
   String password = ctx.state.passwordContronller.text;
-  NeteaseCloudUserEntity user = await NeteaseCloudUserModel.login(phone,password);
-  if(user.code == 200) {
-    _onLoginSuccess(user,action,ctx);
+  if(phone.isEmpty || password.isEmpty) {
+    Fluttertoast.showToast(msg: "请输入手机号或密码");
+    return;
+  }
+  NeteaseCloudUserEntity user = await NeteaseCloudUserModel.login(ctx.context,phone,password);
+  if(user != null && user.code == 200) {
+    _onLoginSuccess(user,action,ctx,phone);
   }else {
     _onLoginError(user);
   }
 
 }
 
-void _onLoginSuccess(NeteaseCloudUserEntity user,Action action,Context<NeteaseCloudLoginState> ctx) {
-  _onSaveUser(user);
+void _onLoginSuccess(NeteaseCloudUserEntity user,Action action,Context<NeteaseCloudLoginState> ctx,String userKey) {
+  _onSaveUser(user,userKey);
   Fluttertoast.showToast(msg: '欢迎回来，${user.profile.nickname}~',toastLength: Toast.LENGTH_SHORT);
   _jumpToHomePage(action, ctx);
 }
 
 void _onLoginError(NeteaseCloudUserEntity user) {
-  Fluttertoast.showToast(msg: '${user.message}',toastLength: Toast.LENGTH_SHORT);
+  Fluttertoast.showToast(msg: user != null?'${user.message}':'登录失败',toastLength: Toast.LENGTH_SHORT);
 }
 
-void _onSaveUser(NeteaseCloudUserEntity user) async {
+void _onSaveUser(NeteaseCloudUserEntity user,String userKey) async {
   SharedPreferences sp = await SharedPreferences.getInstance();
-  sp.setString('user', json.encode(user));
+  sp.setString(userKey, json.encode(user));
 }
 
 void _jumpToHomePage(Action action,Context<NeteaseCloudLoginState> ctx) {

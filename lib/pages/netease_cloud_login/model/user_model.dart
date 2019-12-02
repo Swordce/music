@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:music/application.dart';
 import 'package:music/utils/net_utils.dart';
 
@@ -7,15 +8,20 @@ import 'user_entity.dart';
 
 class NeteaseCloudUserModel {
   // GET 请求
-  static Future<NeteaseCloudUserEntity> login(String phone, String password) async {
+  static Future<NeteaseCloudUserEntity> login(
+      BuildContext context, String phone, String password) async {
     NeteaseCloudUserEntity user;
-    var userInfo = Application.sp.getString('user');
+    var userInfo = Application.sp.getString(phone);
     if (userInfo != null && userInfo.isNotEmpty) {
       user = parseUser(userInfo);
     } else {
       var response = await NetUtils.getInstance().get("/login/cellphone",
           data: {'phone': phone, 'password': password});
-      user = parseUser(response.data);
+      if (response != null) {
+        user = parseUser(response.data);
+      } else {
+        return null;
+      }
     }
     return user;
   }
