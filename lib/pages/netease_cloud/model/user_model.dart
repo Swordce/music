@@ -1,13 +1,23 @@
 import 'dart:convert';
 
+import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:music/application.dart';
 import 'package:music/utils/net_utils.dart';
 
+import 'home_banner_entity.dart';
 import 'user_entity.dart';
 
 class NeteaseCloudUserModel {
-  // GET 请求
+  
+  //Banner
+  static Future<HomeBannerEntity> getBanner() async {
+    var response = await NetUtils.getInstance().get('/banner',data: {'type':2});
+    final jsonMap = json.decode(response.data);
+    return HomeBannerEntity.fromJson(jsonMap);
+  }
+  
+  //登录
   static Future<NeteaseCloudUserEntity> login(
       BuildContext context, String phone, String password) async {
     NeteaseCloudUserEntity user;
@@ -30,4 +40,5 @@ class NeteaseCloudUserModel {
     final jsonMap = json.decode(user);
     return NeteaseCloudUserEntity.fromJson(jsonMap);
   }
+  
 }

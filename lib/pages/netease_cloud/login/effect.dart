@@ -4,11 +4,11 @@ import 'dart:convert';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/widgets.dart' hide Action;
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:music/pages/netease_cloud/model/user_entity.dart';
+import 'package:music/pages/netease_cloud/model/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'action.dart';
-import 'model/user_entity.dart';
-import 'model/user_model.dart';
 import 'state.dart';
 
 Effect<NeteaseCloudLoginState> buildEffect() {
