@@ -1,16 +1,26 @@
 import 'package:fish_redux/fish_redux.dart';
-import 'package:music/pages/home/adapter/item/state.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class HomeState implements Cloneable<HomeState> {
-
-  List<HomePageItemState> itemState;
+  TabController tabController;
+  List<TabModel> tabModels;
 
   @override
   HomeState clone() {
-    return HomeState()..itemState = itemState;
+    return HomeState()
+      ..tabController = tabController
+      ..tabModels = tabModels;
   }
 }
 
 HomeState initState(Map<String, dynamic> args) {
   return HomeState();
+}
+
+class TabModel {
+  IconData tabIcon;
+  String title;
+
+  TabModel({this.tabIcon, this.title});
 }

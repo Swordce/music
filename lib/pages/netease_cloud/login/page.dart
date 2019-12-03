@@ -1,9 +1,10 @@
 import 'package:fish_redux/fish_redux.dart';
+import 'package:music/pages/netease_cloud/login/reducer.dart';
+import 'package:music/pages/netease_cloud/login/view.dart';
+
 
 import 'effect.dart';
-import 'reducer.dart';
 import 'state.dart';
-import 'view.dart';
 
 class NeteaseCloudLoginPage extends Page<NeteaseCloudLoginState, Map<String, dynamic>> {
   NeteaseCloudLoginPage()

@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'action.dart';
 import 'state.dart';
 
-Widget buildView(HomePageItemState state, Dispatch dispatch, ViewService viewService) {
+Widget buildView(MusicState state, Dispatch dispatch, ViewService viewService) {
   return Container(
-    child: Text(state.title),
+    color: Colors.red,
   );
 }

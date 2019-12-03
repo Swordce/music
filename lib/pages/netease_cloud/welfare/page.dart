@@ -5,18 +5,18 @@ import 'reducer.dart';
 import 'state.dart';
 import 'view.dart';
 
-class HomePageItemPage extends Page<HomePageItemState, Map<String, dynamic>> {
-  HomePageItemPage()
+class WelfarePage extends Page<WelfareState, Map<String, dynamic>> {
+  WelfarePage()
       : super(
             initState: initState,
             effect: buildEffect(),
             reducer: buildReducer(),
             view: buildView,
-            dependencies: Dependencies<HomePageItemState>(
+            dependencies: Dependencies<WelfareState>(
                 adapter: null,
-                slots: <String, Dependent<HomePageItemState>>{
+                slots: <String, Dependent<WelfareState>>{
                 }),
-            middleware: <Middleware<HomePageItemState>>[
+            middleware: <Middleware<WelfareState>>[
             ],);
 
 }

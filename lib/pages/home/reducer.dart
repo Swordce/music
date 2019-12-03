@@ -7,9 +7,16 @@ Reducer<HomeState> buildReducer() {
   return asReducer(
     <Object, Reducer<HomeState>>{
       HomeAction.action: _onAction,
-      HomeAction.initData:_onInitDataAction,
+      HomeAction.changeTab:_changeTab,
     },
   );
+}
+
+HomeState _changeTab(HomeState state,Action action) {
+  final HomeState newState = state.clone();
+  newState.tabController = action.payload['controller'];
+  newState.tabModels = action.payload['tablist'];
+  return newState;
 }
 
 HomeState _onAction(HomeState state, Action action) {
@@ -17,8 +24,3 @@ HomeState _onAction(HomeState state, Action action) {
   return newState;
 }
 
-HomeState _onInitDataAction(HomeState state,Action action) {
-  HomeState homeState = state.clone();
-  homeState.itemState = action.payload;
-  return homeState;
-}

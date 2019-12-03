@@ -1,5 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
-import 'package:music/pages/home/adapter/item/state.dart';
+import 'package:flutter/material.dart' hide Action;
+
 import 'action.dart';
 import 'state.dart';
 
@@ -13,19 +14,13 @@ Effect<HomeState> buildEffect() {
 void _onAction(Action action, Context<HomeState> ctx) {}
 
 void _initData(Action action, Context<HomeState> ctx) {
-  List<HomePageItemState> mockData = [
-    HomePageItemState(title: "标题a"),
-    HomePageItemState(title: "标题b"),
-    HomePageItemState(title: "标题c"),
-    HomePageItemState(title: "标题d"),
-    HomePageItemState(title: "标题e"),
-    HomePageItemState(title: "标题f"),
-    HomePageItemState(title: "标题g"),
-    HomePageItemState(title: "标题h"),
-    HomePageItemState(title: "标题i"),
-    HomePageItemState(title: "标题j"),
-    HomePageItemState(title: "标题k"),
-    HomePageItemState(title: "标题l"),
-  ];
-  ctx.dispatch(HomeActionCreator.onInitAction(mockData));
+  List<TabModel> list = new List();
+  list.add(TabModel(tabIcon: Icons.home,title: '云音乐'));
+  list.add(TabModel(tabIcon: Icons.home,title: 'QQ音乐'));
+  list.add(TabModel(tabIcon: Icons.home,title: '酷狗音乐'));
+  list.add(TabModel(tabIcon: Icons.home,title: '虾米音乐'));
+
+  final TickerProvider tickerProvider = ctx.stfState  as TickerProvider;
+  var _controller =TabController(vsync: tickerProvider,length: list.length);
+  ctx.dispatch(HomeActionCreator.onChangeTab({'tablist':list,'controller':_controller}));
 }

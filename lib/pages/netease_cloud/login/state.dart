@@ -21,5 +21,7 @@ NeteaseCloudLoginState initState(Map<String, dynamic> args) {
   final NeteaseCloudLoginState state = new NeteaseCloudLoginState();
   state.phoneContronller = new TextEditingController();
   state.passwordContronller = new TextEditingController();
+  state.phoneContronller.text = '17712906965';
+  state.passwordContronller.text = 'zwj920814';
   return state;
 }

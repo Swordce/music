@@ -2,9 +2,11 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:music/pages/netease_cloud/login/action.dart';
 
-import 'action.dart';
 import 'state.dart';
+
+
 
 Widget buildView(
     NeteaseCloudLoginState state, Dispatch dispatch, ViewService viewService) {

@@ -14,6 +14,7 @@ import 'state.dart';
 Effect<NeteaseCloudLoginState> buildEffect() {
   return combineEffects(<Object, Effect<NeteaseCloudLoginState>>{
     NeteaseCloudLoginAction.login: _onLoginAction,
+    Lifecycle.dispose:_pageFinish,
   });
 }
 
@@ -50,4 +51,9 @@ void _onSaveUser(NeteaseCloudUserEntity user,String userKey) async {
 
 void _jumpToHomePage(Action action,Context<NeteaseCloudLoginState> ctx) {
   Navigator.of(ctx.context).popAndPushNamed('home_page',arguments: null);
+}
+
+void _pageFinish(Action action,Context<NeteaseCloudLoginState> ctx) {
+  ctx.state.phoneContronller.dispose();
+  ctx.state.passwordContronller.dispose();
 }
