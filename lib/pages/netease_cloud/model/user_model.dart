@@ -9,14 +9,17 @@ import 'home_banner_entity.dart';
 import 'user_entity.dart';
 
 class NeteaseCloudUserModel {
-  
   //Banner
   static Future<HomeBannerEntity> getBanner() async {
-    var response = await NetUtils.getInstance().get('/banner',data: {'type':2});
-    final jsonMap = json.decode(response.data);
-    return HomeBannerEntity.fromJson(jsonMap);
+    var response =
+        await NetUtils.getInstance().get('/banner', data: {'type': 2});
+    if (response != null) {
+      final jsonMap = json.decode(response.data);
+      return HomeBannerEntity.fromJson(jsonMap);
+    }
+    return null;
   }
-  
+
   //登录
   static Future<NeteaseCloudUserEntity> login(
       BuildContext context, String phone, String password) async {
@@ -40,5 +43,4 @@ class NeteaseCloudUserModel {
     final jsonMap = json.decode(user);
     return NeteaseCloudUserEntity.fromJson(jsonMap);
   }
-  
 }

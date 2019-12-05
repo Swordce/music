@@ -12,7 +12,7 @@ Effect<HomeSwiperState> buildEffect() {
 
 void _onGetHomeBanner(Action action, Context<HomeSwiperState> ctx) async {
   HomeBannerEntity banners = await NeteaseCloudUserModel.getBanner();
-  if(banners.code == 200) {
+  if(banners != null && banners.code == 200) {
     ctx.dispatch(HomeSwiperActionCreator.onUpdateBannerAction(banners.banners));
   }
 }
