@@ -15,5 +15,5 @@ void _onPreLoginAction(Action action, Context<PreLoginState> ctx) {
 }
 
 void _onSkipLoginAction(Action action, Context<PreLoginState> ctx) {
-  Navigator.of(ctx.context).popAndPushNamed('home_page',arguments: null);
+  Navigator.of(ctx.context).popAndPushNamed('main_page',arguments: null);
 }
