@@ -1,6 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:music/pages/main_page/page.dart';
+import 'package:music/pages/music/netease_cloud/play_list_detail/page.dart';
 import 'package:music/pages/music/page.dart';
 import 'package:music/pages/pre_login/page.dart';
 import 'package:music/pages/splash/page.dart';
@@ -16,6 +17,7 @@ Widget createApp() {
       'login_page':NeteaseCloudLoginPage(),
       'main_page':MainPagePage(),
       'music_page':MusicPage(),
+      'play_list_page':PlayListPage(),
       'test_page':TestPagePage(),
     },
   );

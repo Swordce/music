@@ -45,7 +45,7 @@ Widget buildView(NeteaseState state, Dispatch dispatch, ViewService viewService)
             }, childCount: state.keys != null?state.keys.length:0),
           ),
           DefaultLineView(),
-          PlayListView(playList: state.recommendList,),
+          PlayListView(playList: state.recommendList,dispatch: dispatch,),
         ],
       ),
     )

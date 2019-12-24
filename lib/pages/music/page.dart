@@ -1,11 +1,11 @@
 import 'package:fish_redux/fish_redux.dart';
-import 'package:music/pages/music/netease_cloud/play/component.dart';
-import 'package:music/pages/music/netease_cloud/play/state.dart';
 import 'package:music/pages/music/qq_cloud/play/component.dart';
 import 'package:music/pages/music/qq_cloud/play/state.dart';
 import 'package:music/pages/music/xiami_cloud/play/state.dart';
 
 import 'effect.dart';
+import 'netease_cloud/home/component.dart';
+import 'netease_cloud/home/state.dart';
 import 'reducer.dart';
 import 'state.dart';
 import 'view.dart';
