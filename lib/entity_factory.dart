@@ -1,6 +1,7 @@
-import 'pages/music/netease_cloud/model/home_banner_entity.dart';
-import 'pages/music/netease_cloud/model/recommend_playlist_entity.dart';
-import 'pages/music/netease_cloud/model/user_entity.dart';
+import 'package:music/pages/music/netease_cloud/model/home_banner_entity.dart';
+import 'package:music/pages/music/netease_cloud/model/play_list_detail_entity.dart';
+import 'package:music/pages/music/netease_cloud/model/recommend_playlist_entity.dart';
+import 'package:music/pages/music/netease_cloud/model/user_entity.dart';
 
 class EntityFactory {
   static T generateOBJ<T>(json) {
@@ -8,6 +9,8 @@ class EntityFactory {
       return null;
     } else if (T.toString() == "HomeBannerEntity") {
       return HomeBannerEntity.fromJson(json) as T;
+    } else if (T.toString() == "PlayListDetailEntity") {
+      return PlayListDetailEntity.fromJson(json) as T;
     } else if (T.toString() == "RecommendPlaylistEntity") {
       return RecommendPlaylistEntity.fromJson(json) as T;
     } else if (T.toString() == "NeteaseCloudUserEntity") {

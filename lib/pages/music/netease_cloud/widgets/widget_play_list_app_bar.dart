@@ -2,26 +2,38 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:music/pages/music/netease_cloud/model/play_list_detail_entity.dart';
 import 'package:music/pages/music/netease_cloud/widgets/flexible_detail_bar.dart';
 import 'package:music/pages/music/netease_cloud/widgets/play_list_item.dart';
 import 'package:music/pages/music/netease_cloud/widgets/widget_music_list_header.dart';
 
 class PlayListAppBarWidget extends StatelessWidget {
   final double expandedHeight;
-  final String backgroundImg;
-  final String title;
   final double sigma;
-  final int count;
-  final String id;
+  final String backgroundImg;
+  final int playCount;
+  final String title;
+  final String avatar;
+  final String nickName;
+  final String description;
+  final int commentCount;
+  final int shareCount;
+  final int musicCount;
 
-  PlayListAppBarWidget({
-    @required this.expandedHeight,
-    @required this.title,
-    @required this.backgroundImg,
-    this.id,
-    this.sigma = 5,
-    this.count,
-  });
+  PlayListAppBarWidget(
+      {Key key,
+      this.expandedHeight,
+      this.sigma,
+      this.backgroundImg,
+      this.playCount,
+      this.title,
+      this.avatar,
+      this.nickName,
+      this.description,
+      this.commentCount,
+      this.shareCount,
+      this.musicCount})
+      : super(key: key);
 
   Widget _buildHeader(String path, int count) {
     return Container(
@@ -33,8 +45,7 @@ class PlayListAppBarWidget extends StatelessWidget {
               PlayListItem(
                 width: 120,
                 height: 120,
-                path:
-                    'https://p1.music.126.net/OcahC3LdNibw0NR-H7dQLg==/109951164541371447.jpg',
+                path: backgroundImg,
                 count: count,
               ),
               Padding(
@@ -45,7 +56,7 @@ class PlayListAppBarWidget extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.only(bottom: 15),
                       width: 180,
-                      child: Text('失眠夜：就让这些男友音陪你入睡',
+                      child: Text(title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -56,14 +67,14 @@ class PlayListAppBarWidget extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              "http://p1.music.126.net/wKC3ilv-31BXw2SENCENGA==/109951163390157568.jpg"),
+                          backgroundImage:
+                              NetworkImage(avatar),
                           radius: 12,
                         ),
                         Container(
                           constraints: BoxConstraints(maxWidth: 120),
                           margin: EdgeInsets.only(left: 10, right: 10),
-                          child: Text('YouTube视频精选推荐',
+                          child: Text(nickName,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: 12)),
@@ -82,7 +93,8 @@ class PlayListAppBarWidget extends StatelessWidget {
                           children: <Widget>[
                             Container(
                               constraints: BoxConstraints(maxWidth: 120),
-                              child: Text('表白的歌词\n性感的嗓音\n睡前耳朵的福利\n安静夜晚伴你入睡',
+                              margin: EdgeInsets.only(right: 20),
+                              child: Text(description,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(fontSize: 12)),
@@ -100,13 +112,15 @@ class PlayListAppBarWidget extends StatelessWidget {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(top: 30,bottom: 10),
+            margin: EdgeInsets.only(top: 30, bottom: 10),
             child: Row(
               children: <Widget>[
-                _buildHeaderItem('assets/images/icon_comment.png',471.toString()),
-                _buildHeaderItem('assets/images/icon_share.png',151.toString()),
-                _buildHeaderItem('assets/images/icon_download.png','下载'),
-                _buildHeaderItem('assets/images/icon_multi_select.png','多选'),
+                _buildHeaderItem('assets/images/icon_comment.png',
+                    commentCount.toString()),
+                _buildHeaderItem('assets/images/icon_share.png',
+                    shareCount.toString()),
+                _buildHeaderItem('assets/images/icon_download.png', '下载'),
+                _buildHeaderItem('assets/images/icon_multi_select.png', '多选'),
               ],
             ),
           )
@@ -115,13 +129,19 @@ class PlayListAppBarWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaderItem(String imgPath,String name) {
+  Widget _buildHeaderItem(String imgPath, String name) {
     return Expanded(
       flex: 1,
       child: Column(
         children: <Widget>[
-          Image.asset(imgPath,width: 24,height: 24,),
-          Container(height: 5,),
+          Image.asset(
+            imgPath,
+            width: 24,
+            height: 24,
+          ),
+          Container(
+            height: 5,
+          ),
           Text(name)
         ],
       ),
@@ -144,22 +164,16 @@ class PlayListAppBarWidget extends StatelessWidget {
         ),
       ],
       flexibleSpace: FlexibleDetailBar(
-        content: _buildHeader(backgroundImg, count),
+        content:
+            _buildHeader(backgroundImg, playCount),
         background: Stack(
           children: <Widget>[
-            backgroundImg.startsWith('http')
-                ? CachedNetworkImage(
-                    imageUrl: backgroundImg,
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                  )
-                : Image.asset(
-                    backgroundImg,
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
+            CachedNetworkImage(
+              imageUrl: backgroundImg,
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.cover,
+            ),
             BackdropFilter(
               filter: ImageFilter.blur(
                 sigmaY: sigma,
@@ -175,7 +189,7 @@ class PlayListAppBarWidget extends StatelessWidget {
         ),
       ),
       bottom: MusicListHeader(
-        count: count,
+        count: musicCount,
       ),
     );
   }

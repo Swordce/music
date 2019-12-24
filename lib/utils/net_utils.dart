@@ -8,8 +8,8 @@ import 'package:music/widgets/loading.dart';
 
 class NetUtils {
   static NetUtils netUtils;
-  static final String baseUrl = 'http://10.11.29.106:3000';
-//  static final String baseUrl = 'http://10.0.16.55:3000';
+//  static final String baseUrl = 'http://10.11.29.106:3000';
+  static final String baseUrl = 'http://10.0.16.55:3000';
 //  static final String baseUrl = 'http://10.11.65.129:3000';
   Dio dio;
   BaseOptions options;
