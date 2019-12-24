@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:music/pages/music/netease_cloud/widgets/play_list_detail_list.dart';
 import 'package:music/pages/music/netease_cloud/widgets/widget_play_list_app_bar.dart';
 
 import 'action.dart';
@@ -28,12 +29,12 @@ Widget buildView(
                 musicCount: state.detailPlaylist.trackCount,
               ),
               new SliverFixedExtentList(
-                itemExtent: 50.0,
+                itemExtent: 55.0,
                 delegate: new SliverChildBuilderDelegate(
-                  (context, index) => new ListTile(
-                    title: new Text("Item $index"),
-                  ),
-                  childCount: 30,
+                  (context, index) => PlayListDetailList(index: index+1,
+                      musicName: state.detailPlaylist.tracks[index].name,
+                      musicSoner:state.detailPlaylist.tracks[index].ar[0].name+'-' + state.detailPlaylist.tracks[index].al.name),
+                  childCount: state.detailPlaylist.tracks.length,
                 ),
               ),
             ],
