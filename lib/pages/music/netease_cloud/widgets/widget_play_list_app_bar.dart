@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:music/pages/music/netease_cloud/model/play_list_detail_entity.dart';
 import 'package:music/pages/music/netease_cloud/widgets/flexible_detail_bar.dart';
 import 'package:music/pages/music/netease_cloud/widgets/play_list_item.dart';
 import 'package:music/pages/music/netease_cloud/widgets/widget_music_list_header.dart';
@@ -16,6 +15,7 @@ class PlayListAppBarWidget extends StatelessWidget {
   final String avatar;
   final String nickName;
   final String description;
+  final String copywriter;
   final int commentCount;
   final int shareCount;
   final int musicCount;
@@ -30,6 +30,7 @@ class PlayListAppBarWidget extends StatelessWidget {
       this.avatar,
       this.nickName,
       this.description,
+      this.copywriter,
       this.commentCount,
       this.shareCount,
       this.musicCount})
@@ -54,7 +55,7 @@ class PlayListAppBarWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(bottom: 15),
+                      margin: EdgeInsets.only(top: 15, bottom: 15),
                       width: 180,
                       child: Text(title,
                           maxLines: 2,
@@ -67,8 +68,7 @@ class PlayListAppBarWidget extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(avatar),
+                          backgroundImage: NetworkImage(avatar),
                           radius: 12,
                         ),
                         Container(
@@ -87,7 +87,7 @@ class PlayListAppBarWidget extends StatelessWidget {
                       ],
                     ),
                     Container(
-                        margin: EdgeInsets.only(top: 10),
+                        margin: EdgeInsets.only(top: 20),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
@@ -115,10 +115,10 @@ class PlayListAppBarWidget extends StatelessWidget {
             margin: EdgeInsets.only(top: 30, bottom: 10),
             child: Row(
               children: <Widget>[
-                _buildHeaderItem('assets/images/icon_comment.png',
-                    commentCount.toString()),
-                _buildHeaderItem('assets/images/icon_share.png',
-                    shareCount.toString()),
+                _buildHeaderItem(
+                    'assets/images/icon_comment.png', commentCount.toString()),
+                _buildHeaderItem(
+                    'assets/images/icon_share.png', shareCount.toString()),
                 _buildHeaderItem('assets/images/icon_download.png', '下载'),
                 _buildHeaderItem('assets/images/icon_multi_select.png', '多选'),
               ],
@@ -155,6 +155,26 @@ class PlayListAppBarWidget extends StatelessWidget {
       backgroundColor: Colors.red,
       leading: Icon(Icons.arrow_back),
       expandedHeight: expandedHeight,
+      titleSpacing: 0,
+      title: Container(
+        alignment: Alignment.centerLeft,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              '歌单',
+              style: TextStyle(fontSize: 18),
+            ),
+            Text(
+              copywriter,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 12),
+            )
+          ],
+        ),
+      ),
       actions: <Widget>[
         IconButton(
           icon: Icon(
@@ -164,8 +184,7 @@ class PlayListAppBarWidget extends StatelessWidget {
         ),
       ],
       flexibleSpace: FlexibleDetailBar(
-        content:
-            _buildHeader(backgroundImg, playCount),
+        content: _buildHeader(backgroundImg, playCount),
         background: Stack(
           children: <Widget>[
             CachedNetworkImage(

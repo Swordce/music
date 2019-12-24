@@ -69,7 +69,7 @@ class PlayListView extends StatelessWidget {
                     return GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
-                        dispatch(NeteaseActionCreator.onJumpToPlayList(playList[index].id.toString()));
+                        dispatch(NeteaseActionCreator.onJumpToPlayList({'id':playList[index].id.toString(),'copywriter':playList[index].copywriter}));
                       },
                       child: PlayListItem(width: 100,height: 100,path: playList[index].picUrl,
                         title: playList[index].name, count:playList[index].playCount,),

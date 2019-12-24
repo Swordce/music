@@ -38,7 +38,6 @@ class PlayListDetailList extends StatelessWidget {
                     maxLines: 1,
                     style: TextStyle(
                         fontSize: 16,
-                        fontWeight: FontWeight.bold,
                         color: Colors.black87),
                   ),
                   Container(
@@ -56,7 +55,7 @@ class PlayListDetailList extends StatelessWidget {
           ),
           Container(
             margin: EdgeInsets.only(right: 20),
-            child: Icon(Icons.more_vert,color: Colors.black26,),
+            child: Icon(Icons.more_vert,color: Colors.black54,),
           )
         ],
       ),

@@ -12,7 +12,10 @@ Widget buildView(
     PlayListState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
     body: state.detailPlaylist == null
-        ? Container()
+        ? Container(
+            alignment: Alignment.center,
+            child: Text('加载中...'),
+          )
         : CustomScrollView(
             slivers: <Widget>[
               PlayListAppBarWidget(
@@ -27,13 +30,18 @@ Widget buildView(
                 commentCount: state.detailPlaylist.commentCount,
                 shareCount: state.detailPlaylist.shareCount,
                 musicCount: state.detailPlaylist.trackCount,
+                copywriter: state.copywriter,
               ),
               new SliverFixedExtentList(
                 itemExtent: 55.0,
                 delegate: new SliverChildBuilderDelegate(
-                  (context, index) => PlayListDetailList(index: index+1,
+                  (context, index) => PlayListDetailList(
+                      index: index + 1,
                       musicName: state.detailPlaylist.tracks[index].name,
-                      musicSoner:state.detailPlaylist.tracks[index].ar[0].name+'-' + state.detailPlaylist.tracks[index].al.name),
+                      musicSoner:
+                          state.detailPlaylist.tracks[index].ar[0].name +
+                              '-' +
+                              state.detailPlaylist.tracks[index].al.name),
                   childCount: state.detailPlaylist.tracks.length,
                 ),
               ),

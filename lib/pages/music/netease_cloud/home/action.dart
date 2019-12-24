@@ -9,8 +9,8 @@ class NeteaseActionCreator {
   }
 
 
-  static Action onJumpToPlayList(String playId) {
-    return  Action(NeteaseAction.jumpToPlayList,payload: playId);
+  static Action onJumpToPlayList(playList) {
+    return  Action(NeteaseAction.jumpToPlayList,payload: playList);
   }
 
 }
