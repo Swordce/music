@@ -1,21 +1,22 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart'hide Action;
 import 'package:flutter/material.dart' hide Action;
+import 'package:music/pages/music/model/common_playlist_model.dart';
 import 'package:music/pages/music/netease_cloud/home/action.dart';
 import 'package:music/pages/music/netease_cloud/model/recommend_playlist_entity.dart';
 import 'package:music/widgets/empty_view.dart';
 
-import 'play_list_item.dart';
+import 'widget_common_playlist_view.dart';
 
 //推荐歌单
 
-class PlayListView extends StatelessWidget {
-  List<RecommandPlaylistResult> playList;
+class RecommentPlaylistView extends StatelessWidget {
+  List<CommonPlaylistModel> playlist;
   Dispatch dispatch;
 
-  PlayListView({
+  RecommentPlaylistView({
     Key key,
-    this.playList,
+    this.playlist,
     this.dispatch
   }) : super(key: key);
 
@@ -57,7 +58,7 @@ class PlayListView extends StatelessWidget {
         ),
         Container(
           margin: EdgeInsets.only(left: 20, right: 20),
-          child: playList == null
+          child: playlist == null
               ? EmptyView()
               : GridView.custom(
                   physics: NeverScrollableScrollPhysics(),
@@ -69,12 +70,12 @@ class PlayListView extends StatelessWidget {
                     return GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
-                        dispatch(NeteaseActionCreator.onJumpToPlayList({'id':playList[index].id.toString(),'copywriter':playList[index].copywriter}));
+                        dispatch(NeteaseActionCreator.onJumpToPlayList({'id':playlist[index].id.toString(),'copywriter':playlist[index].copywriter}));
                       },
-                      child: PlayListItem(width: 100,height: 100,path: playList[index].picUrl,
-                        title: playList[index].name, count:playList[index].playCount,),
+                      child: CommonPlaylistView(width: 100,height: 100,path: playlist[index].picUrl,
+                        title: playlist[index].playlistName, count:playlist[index].playCount,),
                     );
-                  }, childCount: playList.length),
+                  }, childCount: playlist.length),
                 ),
         ),
       ],

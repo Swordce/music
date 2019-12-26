@@ -1,39 +1,27 @@
 import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:music/pages/music/netease_cloud/widgets/flexible_detail_bar.dart';
-import 'package:music/pages/music/netease_cloud/widgets/play_list_item.dart';
-import 'package:music/pages/music/netease_cloud/widgets/widget_music_list_header.dart';
+import 'package:music/pages/music/model/common_music_model.dart';
+import 'package:music/pages/music/widgets/flexible_sliverappbar_detail_view.dart';
+import 'package:music/pages/music/widgets/widget_common_playlist_view.dart';
+import 'package:music/pages/music/widgets/widget_common_header_bottom.dart';
 
-class PlayListAppBarWidget extends StatelessWidget {
+class CommonPlaylistHeaderView extends StatelessWidget {
   final double expandedHeight;
   final double sigma;
-  final String backgroundImg;
-  final int playCount;
-  final String title;
-  final String avatar;
-  final String nickName;
-  final String description;
   final String copywriter;
-  final int commentCount;
-  final int shareCount;
-  final int musicCount;
+  final MusicModel music;
+  final Dispatch dispatch;
 
-  PlayListAppBarWidget(
+
+  CommonPlaylistHeaderView(
       {Key key,
       this.expandedHeight,
       this.sigma,
-      this.backgroundImg,
-      this.playCount,
-      this.title,
-      this.avatar,
-      this.nickName,
-      this.description,
       this.copywriter,
-      this.commentCount,
-      this.shareCount,
-      this.musicCount})
+      this.music, this.dispatch})
       : super(key: key);
 
   Widget _buildHeader(String path, int count) {
@@ -43,10 +31,10 @@ class PlayListAppBarWidget extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              PlayListItem(
+              CommonPlaylistView(
                 width: 120,
                 height: 120,
-                path: backgroundImg,
+                path: music.coverImgUrl,
                 count: count,
               ),
               Padding(
@@ -57,7 +45,7 @@ class PlayListAppBarWidget extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.only(top: 15, bottom: 15),
                       width: 180,
-                      child: Text(title,
+                      child: Text(music.title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -68,13 +56,13 @@ class PlayListAppBarWidget extends StatelessWidget {
                     Row(
                       children: <Widget>[
                         CircleAvatar(
-                          backgroundImage: NetworkImage(avatar),
+                          backgroundImage: NetworkImage(music.avatarUrl),
                           radius: 12,
                         ),
                         Container(
                           constraints: BoxConstraints(maxWidth: 120),
                           margin: EdgeInsets.only(left: 10, right: 10),
-                          child: Text(nickName,
+                          child: Text(music.nickname,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: 12)),
@@ -94,7 +82,7 @@ class PlayListAppBarWidget extends StatelessWidget {
                             Container(
                               constraints: BoxConstraints(maxWidth: 120),
                               margin: EdgeInsets.only(right: 20),
-                              child: Text(description,
+                              child: Text(music.description,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(fontSize: 12)),
@@ -116,9 +104,9 @@ class PlayListAppBarWidget extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 _buildHeaderItem(
-                    'assets/images/icon_comment.png', commentCount.toString()),
+                    'assets/images/icon_comment.png', music.commentCount.toString()),
                 _buildHeaderItem(
-                    'assets/images/icon_share.png', shareCount.toString()),
+                    'assets/images/icon_share.png', music.shareCount.toString()),
                 _buildHeaderItem('assets/images/icon_download.png', '下载'),
                 _buildHeaderItem('assets/images/icon_multi_select.png', '多选'),
               ],
@@ -153,7 +141,12 @@ class PlayListAppBarWidget extends StatelessWidget {
     return SliverAppBar(
       pinned: true,
       backgroundColor: Colors.red,
-      leading: Icon(Icons.arrow_back),
+      leading: IconButton(
+        icon: Icon(Icons.arrow_back),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       expandedHeight: expandedHeight,
       titleSpacing: 0,
       title: Container(
@@ -184,11 +177,11 @@ class PlayListAppBarWidget extends StatelessWidget {
         ),
       ],
       flexibleSpace: FlexibleDetailBar(
-        content: _buildHeader(backgroundImg, playCount),
+        content: _buildHeader(music.coverImgUrl, music.playCount),
         background: Stack(
           children: <Widget>[
             CachedNetworkImage(
-              imageUrl: backgroundImg,
+              imageUrl: music.coverImgUrl,
               width: double.infinity,
               height: double.infinity,
               fit: BoxFit.cover,
@@ -207,8 +200,8 @@ class PlayListAppBarWidget extends StatelessWidget {
           ],
         ),
       ),
-      bottom: MusicListHeader(
-        count: musicCount,
+      bottom: CommonPlaylistHeaderBottomView(
+        count: music.musicList.length,
       ),
     );
   }

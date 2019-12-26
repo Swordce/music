@@ -1,34 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:sprintf/sprintf.dart';
+import 'package:music/pages/music/utils/CommonUtils.dart';
 
-//歌单item
-
-class PlayListItem extends StatelessWidget {
+class CommonPlaylistView extends StatelessWidget {
   String path;
   int count;
   String title;
   double width;
   double height;
 
-  PlayListItem({Key key, @required this.path, @required this.count, this.title,this.width,this.height})
+  CommonPlaylistView({Key key, @required this.path, @required this.count, this.title,this.width,this.height})
       : super(key: key);
-
-  String playCountFormat(int playCount) {
-    String standardPlayCount = "";
-    if (playCount < 0) {
-      standardPlayCount = "0";
-    } else if (playCount < 10000) {
-      standardPlayCount = playCount.toString();
-    } else if (playCount < 100000000) {
-      standardPlayCount =
-          sprintf("%d.%02d万", [playCount ~/ 10000, playCount % 10000 ~/ 100]);
-    } else if (playCount > 100000000) {
-      standardPlayCount = sprintf("%d.%02d亿",
-          [playCount ~/ 100000000, playCount % 100000000 ~/ 1000000]);
-    }
-    return standardPlayCount;
-  }
 
   Widget _buildPlayCoount(int count) {
     return Row(
@@ -45,7 +27,7 @@ class PlayListItem extends StatelessWidget {
         Container(
           margin: EdgeInsets.only(right: 5, top: 5),
           child: Text(
-            playCountFormat(count),
+            CommonUtils.playCountFormat(count),
             style: TextStyle(color: Colors.white, fontSize: 12),
           ),
         )

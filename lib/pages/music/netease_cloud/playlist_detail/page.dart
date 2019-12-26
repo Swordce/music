@@ -7,18 +7,18 @@ import 'view.dart';
 
 //歌单详情
 
-class PlayListPage extends Page<PlayListState, Map<String, dynamic>> {
-  PlayListPage()
+class PlaylistDetailPage extends Page<PlaylistDetailState, Map<String, dynamic>> {
+  PlaylistDetailPage()
       : super(
             initState: initState,
             effect: buildEffect(),
             reducer: buildReducer(),
             view: buildView,
-            dependencies: Dependencies<PlayListState>(
+            dependencies: Dependencies<PlaylistDetailState>(
                 adapter: null,
-                slots: <String, Dependent<PlayListState>>{
+                slots: <String, Dependent<PlaylistDetailState>>{
                 }),
-            middleware: <Middleware<PlayListState>>[
+            middleware: <Middleware<PlaylistDetailState>>[
             ],);
 
 }

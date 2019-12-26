@@ -12,7 +12,7 @@ Effect<NeteaseState> buildEffect() {
 }
 
 void _onJumpToPlayList(Action action, Context<NeteaseState> ctx) {
-  Navigator.of(ctx.context).pushNamed('play_list_page',arguments: {'playListId':action.payload['id'],'copywriter':action.payload['copywriter']});
+  Navigator.of(ctx.context).pushNamed('playlist_detail_page',arguments: action.payload);
 }
 
 void _onAction(Action action, Context<NeteaseState> ctx) {

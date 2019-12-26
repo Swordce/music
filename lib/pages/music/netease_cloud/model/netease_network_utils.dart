@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:music/application.dart';
+import 'package:music/pages/music/netease_cloud/model/music_url_entity.dart';
 import 'package:music/utils/net_utils.dart';
 
 
@@ -10,7 +11,17 @@ import 'recommend_playlist_entity.dart';
 import 'user_entity.dart';
 import 'play_list_detail_entity.dart';
 
-class NeteaseCloudUserModel {
+class NeteaseCloudNeteaseUtils {
+
+  //歌曲Url
+  static Future<MusicUrlEntity> getMusicUrl(String id) async {
+    var response = await NetUtils.getInstance().get('/song/url',data: {'id':id});
+    if(response != null) {
+      final jsonMap = json.decode(response.data);
+      return MusicUrlEntity.fromJson(jsonMap);
+    }
+    return null;
+  }
 
   //歌单详情
   static Future<PlayListDetailEntity> getPlayListDetail(String id) async {
@@ -23,7 +34,7 @@ class NeteaseCloudUserModel {
   }
 
   //推荐歌单
-  static Future<RecommendPlaylistEntity> getRecommendPlayList() async {
+  static Future<RecommendPlaylistEntity> getRecommendPlaylist() async {
     var response =
         await NetUtils.getInstance().get('/personalized', data: {'limit': 6});
     if(response != null) {

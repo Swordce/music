@@ -1,4 +1,5 @@
 import 'package:fish_redux/fish_redux.dart';
+import 'package:music/pages/music/model/common_playlist_model.dart';
 
 import 'netease_cloud/model/home_banner_entity.dart';
 import 'netease_cloud/model/recommend_playlist_entity.dart';
@@ -12,7 +13,7 @@ class MusicState implements Cloneable<MusicState> {
   List<HomeBannerBanner> bannerList;
 
   //推荐歌单
-  List<RecommandPlaylistResult> recommendList;
+  List<CommonPlaylistModel> recommendList;
 
   @override
   MusicState clone() {

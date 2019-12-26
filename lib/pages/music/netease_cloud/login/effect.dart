@@ -4,7 +4,7 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/widgets.dart' hide Action;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:music/pages/music/netease_cloud/model/user_entity.dart';
-import 'package:music/pages/music/netease_cloud/model/user_model.dart';
+import 'package:music/pages/music/netease_cloud/model/netease_network_utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'action.dart';
@@ -24,7 +24,7 @@ void _onLoginAction(Action action, Context<NeteaseCloudLoginState> ctx) async {
     Fluttertoast.showToast(msg: "请输入手机号或密码");
     return;
   }
-  NeteaseCloudUserEntity user = await NeteaseCloudUserModel.login(ctx.context,phone,password);
+  NeteaseCloudUserEntity user = await NeteaseCloudNeteaseUtils.login(ctx.context,phone,password);
   if(user != null && user.code == 200) {
     _onLoginSuccess(user,action,ctx,phone);
   }else {

@@ -1,9 +1,9 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:music/pages/music/netease_cloud/widgets/home_icon_text.dart';
-import 'package:music/pages/music/netease_cloud/widgets/home_swiper/page.dart';
-import 'package:music/pages/music/netease_cloud/widgets/paly_list_view.dart';
+import 'package:music/pages/music/widgets/common_swiper/page.dart';
+import 'package:music/pages/music/widgets/widget_quick_entrance_view.dart';
+import 'package:music/pages/music/widgets/widget_recommend_playlist_view.dart';
 import 'package:music/widgets/keepalive_widget.dart';
 import 'package:music/widgets/line.dart';
 
@@ -37,7 +37,7 @@ Widget buildView(NeteaseState state, Dispatch dispatch, ViewService viewService)
                       break;
                   }
                 },
-                child: HomeIconText(
+                child: QuickEntranceView(
                   iconPath: state.map[state.keys[index]],
                   title: state.keys[index],
                 ),
@@ -45,7 +45,7 @@ Widget buildView(NeteaseState state, Dispatch dispatch, ViewService viewService)
             }, childCount: state.keys != null?state.keys.length:0),
           ),
           DefaultLineView(),
-          PlayListView(playList: state.recommendList,dispatch: dispatch,),
+          RecommentPlaylistView(playlist: state.recommendList,dispatch: dispatch,),
         ],
       ),
     )

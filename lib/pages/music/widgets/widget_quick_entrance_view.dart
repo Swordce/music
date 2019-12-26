@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class HomeIconText extends StatelessWidget {
+class QuickEntranceView extends StatelessWidget {
   String iconPath;
   String title;
   var width = 40.0;
-  HomeIconText({Key key, this.iconPath, this.title}) : super(key: key);
+  QuickEntranceView({Key key, this.iconPath, this.title}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return  Column(

@@ -9,7 +9,7 @@ Reducer<MusicState> buildReducer() {
       MusicAction.action: _onAction,
       MusicAction.initSwiper:_initSwiper,
       MusicAction.initEntrance:_initEntrance,
-      MusicAction.initPlayList:_initPlayList
+      MusicAction.initPlaylist:_initPlayList
     },
   );
 }
