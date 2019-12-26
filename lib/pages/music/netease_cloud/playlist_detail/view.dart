@@ -48,9 +48,7 @@ Widget buildView(
                   ],
                 ),
               ),
-              state.globalMusic == null
-                  ? Container()
-                  : Offstage(
+              Offstage(
                       offstage: !state.showPlayView,
                       child: GlobalBottomPlayView(
                         currentIndex: state.currentIndex,
@@ -59,6 +57,7 @@ Widget buildView(
                         globalMusic: state.globalMusic,
                         swiperController: state.swiperController,
                         dispatch: dispatch,
+                        audioPlayer: state.audioPlayer,
                       ),
                     )
             ],

@@ -1,5 +1,7 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:music/pages/music/model/common_music_model.dart';
 import 'package:music/store/state.dart';
 
@@ -38,8 +40,16 @@ class MainPageState implements Cloneable<MainPageState>, BaseGlobalState {
       ..showPlayView = showPlayView
       ..currentIndex = currentIndex
       ..globalMusic = globalMusic
-      ..currentPlaylistId = currentPlaylistId;
+      ..currentPlaylistId = currentPlaylistId
+      ..swiperController = swiperController
+      ..audioPlayer = audioPlayer;
   }
+
+  @override
+  AudioPlayer audioPlayer;
+
+  @override
+  SwiperController swiperController;
 }
 
 MainPageState initState(Map<String, dynamic> args) {

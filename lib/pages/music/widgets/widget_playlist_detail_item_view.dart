@@ -18,14 +18,16 @@ class PlaylistDetailItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.centerLeft,
+      alignment: Alignment.centerRight,
       color: Colors.white,
       child: Row(
         children: <Widget>[
           Container(
-            margin: EdgeInsets.only(left: 25, right: 20),
+            width: 30,
+            margin: EdgeInsets.only(left: 15,right: 25),
             child: Text(
               (index+1).toString(),
+              textAlign: TextAlign.right,
               style: TextStyle(
                   color: Colors.black38,
                   fontSize: 18,
@@ -35,18 +37,14 @@ class PlaylistDetailItemView extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Container(
-              alignment: Alignment.centerLeft,
               child: GestureDetector(
                 onTap: () {
                   dispatch(PlaylistDetailActionCreator.onChangeMusic({
+                    'currentPlaylistId':music.playlistId,
                     'index':index,
                     'showPlayView':true,
                     'isPlaying':false,
                   }));
-                  if(currentPlaylistId != music.playlistId) {
-                    dispatch(PlaylistDetailActionCreator.onUpdateMusicPlayList(music));
-                  }
-                  showPlayView??dispatch(PlaylistDetailActionCreator.onLoadMusicUrl({'id':music.musicList[index].musicId,'index':index}));
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

@@ -3,6 +3,9 @@
 //
 
 #import "GeneratedPluginRegistrant.h"
+#import <audio_service/AudioServicePlugin.h>
+#import <audioplayers/AudioplayersPlugin.h>
+#import <flutter_isolate/FlutterIsolatePlugin.h>
 #import <fluttertoast/FluttertoastPlugin.h>
 #import <path_provider/PathProviderPlugin.h>
 #import <shared_preferences/SharedPreferencesPlugin.h>
@@ -11,6 +14,9 @@
 @implementation GeneratedPluginRegistrant
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
+  [AudioServicePlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioServicePlugin"]];
+  [AudioplayersPlugin registerWithRegistrar:[registry registrarForPlugin:@"AudioplayersPlugin"]];
+  [FlutterIsolatePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterIsolatePlugin"]];
   [FluttertoastPlugin registerWithRegistrar:[registry registrarForPlugin:@"FluttertoastPlugin"]];
   [FLTPathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPathProviderPlugin"]];
   [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];

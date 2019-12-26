@@ -1,6 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
 
-enum GlobalAction { changeMusic,loadPlayList,loadMusicUrl,updateMusicUrl,updatePlayStatus,updateProgress,updateLrc,updateCurrentPage }
+enum GlobalAction { changeMusic,loadPlayList,loadMusicUrl,updateMusicUrl,updatePlayStatus,updateProgress,updateLrc,updateCurrentPage,updateAudioPlayer }
 
 class GlobalActionCreator {
 
@@ -34,5 +34,9 @@ class GlobalActionCreator {
 
   static Action onUpdateCurrentPage(index) {
     return  Action(GlobalAction.updateCurrentPage,payload: index);
+  }
+
+  static Action updateAudioPlayer(audioPlayer) {
+    return  Action(GlobalAction.updateAudioPlayer,payload: audioPlayer);
   }
 }

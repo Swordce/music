@@ -1,9 +1,12 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:music/pages/music/model/common_music_model.dart';
 import 'package:music/pages/music/netease_cloud/playlist_detail/action.dart';
+import 'package:music/pages/music/utils/audio_player_utils.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class GlobalBottomPlayView extends StatelessWidget {
@@ -12,6 +15,7 @@ class GlobalBottomPlayView extends StatelessWidget {
   final MusicModel globalMusic;
   final int currentIndex;
   final SwiperController swiperController;
+  final AudioPlayer audioPlayer;
   final Dispatch dispatch;
 
   GlobalBottomPlayView({
@@ -22,12 +26,11 @@ class GlobalBottomPlayView extends StatelessWidget {
     this.globalMusic,
     this.swiperController,
     this.dispatch,
+    this.audioPlayer,
   }) : super(key: key);
 
   Widget _buildItem(int index) {
-    return globalMusic.musicList.isEmpty
-        ? Container()
-        : Container(
+    return Container(
             alignment: Alignment.centerLeft,
             child: Container(
               margin: EdgeInsets.only(left: 20),
@@ -57,9 +60,7 @@ class GlobalBottomPlayView extends StatelessWidget {
                           Container(
                             margin: EdgeInsets.only(top: 5),
                             child: Text(
-                              globalMusic.musicList[index].musicUrl == null
-                                  ? globalMusic.musicList[index].musicSoner
-                                  : globalMusic.musicList[index].musicUrl,
+                              globalMusic.musicList[index].musicSoner,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -70,21 +71,30 @@ class GlobalBottomPlayView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: 5, right: 20),
-                    child: CircularPercentIndicator(
-                      radius: 30.0,
-                      lineWidth: 1.0,
-                      percent: playPercent,
-                      center: Image.asset(
-                        isPlaying
-                            ? 'assets/images/pause.png'
-                            : 'assets/images/play.png',
-                        width: 20,
-                        height: 20,
+                  GestureDetector(
+                    onTap: (){
+                      if(audioPlayer.state == AudioPlayerState.PAUSED) {
+                        AudioPlayerUtils.play(audioPlayer, globalMusic.musicList[index].musicUrl);
+                      }else{
+                        AudioPlayerUtils.pause(audioPlayer);
+                      }
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(left: 5, right: 20),
+                      child: CircularPercentIndicator(
+                        radius: 30.0,
+                        lineWidth: 1.0,
+                        percent: playPercent==null?0:playPercent,
+                        center: Image.asset(
+                          isPlaying
+                              ? 'assets/images/pause.png'
+                              : 'assets/images/play.png',
+                          width: 20,
+                          height: 20,
+                        ),
+                        backgroundColor: Colors.black38,
+                        progressColor: Colors.red,
                       ),
-                      backgroundColor: Colors.black38,
-                      progressColor: Colors.red,
                     ),
                   ),
                   Container(
@@ -105,15 +115,12 @@ class GlobalBottomPlayView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
         alignment: Alignment.bottomCenter,
-        child: globalMusic == null
-            ? Container()
-            : SingleChildScrollView(
+        child: SingleChildScrollView(
                 child: Container(
                     height: 60,
                     child: new Swiper(
                       controller: swiperController,
                       itemCount: globalMusic.musicList.length,
-                      autoplay: false,
                       itemBuilder: (BuildContext context, int index) {
                         return _buildItem(index);
                       },

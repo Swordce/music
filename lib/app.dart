@@ -31,11 +31,13 @@ Widget createApp() {
         page.connectExtraStore<GlobalState>(GlobalStore.store,
             (Object pagestate, GlobalState appState) {
           final BaseGlobalState p = pagestate;
-          if ( p.showPlayView != appState.showPlayView ||
+          if (p.showPlayView != appState.showPlayView ||
               p.isPlaying != appState.isPlaying ||
               p.playProgress != appState.playProgress ||
               p.globalMusic != appState.globalMusic ||
-              p.currentIndex != appState.currentIndex || p.currentPlaylistId != appState.currentPlaylistId) {
+              p.currentIndex != appState.currentIndex ||
+              p.currentPlaylistId != appState.currentPlaylistId ||
+              p.audioPlayer != appState.audioPlayer|| p.swiperController != appState.swiperController) {
             if (pagestate is Cloneable) {
               final Object copy = pagestate.clone();
               final BaseGlobalState newState = copy;
@@ -45,6 +47,8 @@ Widget createApp() {
               newState.globalMusic = appState.globalMusic;
               newState.currentIndex = appState.currentIndex;
               newState.currentPlaylistId = appState.currentPlaylistId;
+              newState.audioPlayer = appState.audioPlayer;
+              newState.swiperController = appState.swiperController;
               return newState;
             }
           }

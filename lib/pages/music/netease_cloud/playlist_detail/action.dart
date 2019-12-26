@@ -25,5 +25,9 @@ class PlaylistDetailActionCreator {
     return Action(PlaylistDetailAction.updateMusicPlayList,payload: playlist);
   }
 
+  static Action onUpdateIndex(index) {
+    return Action(PlaylistDetailAction.updateIndex,payload: index);
+  }
+
 
 }

@@ -24,7 +24,7 @@ class NeteaseCloudNeteaseUtils {
   }
 
   //歌单详情
-  static Future<PlayListDetailEntity> getPlayListDetail(String id) async {
+  static Future<PlayListDetailEntity> getPlaylistDetail(String id) async {
     var response = await NetUtils.getInstance().get('/playlist/detail',data: {'id':id});
     if(response != null) {
       final jsonMap = json.decode(response.data);
