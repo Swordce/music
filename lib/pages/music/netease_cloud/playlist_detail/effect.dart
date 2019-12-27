@@ -17,7 +17,12 @@ Effect<PlaylistDetailState> buildEffect() {
     PlaylistDetailAction.changeMusic: _onChangeMusic,
     PlaylistDetailAction.loadMusicUrl: _loadMusicUrl,
     PlaylistDetailAction.updateMusicPlayList: _onUpdateMusicPlayList,
+    PlaylistDetailAction.startIndex:_onSetStartIndex,
   });
+}
+
+void _onSetStartIndex(Action action, Context<PlaylistDetailState> ctx) {
+  GlobalStore.store.dispatch(GlobalActionCreator.onInitStartIndex(action.payload));
 }
 
 //获取音乐url
@@ -66,12 +71,14 @@ void _onLoadPlaylist(Action action, Context<PlaylistDetailState> ctx) async {
         ids = ids + '${musicModel.musicList[i].musicId},';
       }
       ids = ids.substring(0, ids.length - 1);
-      MusicUrlEntity urlEntity = await NeteaseCloudNeteaseUtils.getMusicUrl(ids);
-      if (urlEntity != null) {
-        MusicModel models =
-        updateMusicUrlList(urlEntity.data, musicModel);
-        _onUpdateGlobalMusicList(models);
-        ctx.dispatch(PlaylistDetailActionCreator.onLoadPlayList(models));
+      if(ids.isNotEmpty) {
+        MusicUrlEntity urlEntity = await NeteaseCloudNeteaseUtils.getMusicUrl(ids);
+        if (urlEntity != null) {
+          MusicModel models =
+          updateMusicUrlList(urlEntity.data, musicModel);
+          _onUpdateGlobalMusicList(models);
+          ctx.dispatch(PlaylistDetailActionCreator.onLoadPlayList(models));
+        }
       }
     }
 

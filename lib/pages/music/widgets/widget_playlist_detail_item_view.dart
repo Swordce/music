@@ -42,6 +42,7 @@ class PlaylistDetailItemView extends StatelessWidget {
               'showPlayView': true,
               'isPlaying': false,
             }));
+            dispatch(PlaylistDetailActionCreator.onStartIndex(index));
           },
           child: Row(
             children: <Widget>[

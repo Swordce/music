@@ -48,8 +48,10 @@ GlobalState _onChangeMusic(GlobalState state, Action action) {
 
 GlobalState _onInitStartIndex(GlobalState state, Action action) {
   GlobalState newState = state.clone();
-  int index = action.payload['index'];
+  int index = action.payload;
   newState.startIndex = index;
+  newState.isPlaying = true;
+  newState.playProgress = 0.0;
   return newState;
 }
 
