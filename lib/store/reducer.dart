@@ -1,4 +1,5 @@
 import 'package:fish_redux/fish_redux.dart';
+import 'package:music/pages/music/model/common_music_model.dart';
 
 import 'action.dart';
 import 'state.dart';
@@ -13,13 +14,16 @@ Reducer<GlobalState> buildReducer() {
       GlobalAction.updateProgress:_onUpdateProgress,
       GlobalAction.updateAudioPlayer:_onUpdateAudioPlayer,
       GlobalAction.updatePlayStatus:_onUpdatePlayStatus,
+      GlobalAction.initStartIndex:_onInitStartIndex,
     },
   );
 }
 
 GlobalState _onLoadPlayList(GlobalState state, Action action) {
   GlobalState newState = state.clone();
+  MusicModel model = action.payload;
   newState.globalMusic = action.payload;
+  println('11111-${model.musicList[0].musicUrl}');
   return newState;
 }
 
@@ -39,6 +43,13 @@ GlobalState _onChangeMusic(GlobalState state, Action action) {
   newState.playProgress = 0;
   newState.currentIndex = index;
   newState.currentPlaylistId = action.payload['currentPlaylistId'];
+  return newState;
+}
+
+GlobalState _onInitStartIndex(GlobalState state, Action action) {
+  GlobalState newState = state.clone();
+  int index = action.payload['index'];
+  newState.startIndex = index;
   return newState;
 }
 

@@ -40,7 +40,8 @@ class PlaylistDetailState
       ..currentIndex = currentIndex
       ..globalMusic = globalMusic
       ..currentPlaylistId = currentPlaylistId
-      ..audioPlayer = audioPlayer;
+      ..audioPlayer = audioPlayer
+    ..startIndex = startIndex;
   }
 
   @override
@@ -48,6 +49,9 @@ class PlaylistDetailState
 
   @override
   SwiperController swiperController;
+
+  @override
+  int startIndex;
 }
 
 PlaylistDetailState initState(Map<String, dynamic> args) {

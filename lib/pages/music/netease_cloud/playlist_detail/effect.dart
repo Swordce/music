@@ -17,7 +17,6 @@ Effect<PlaylistDetailState> buildEffect() {
     PlaylistDetailAction.changeMusic: _onChangeMusic,
     PlaylistDetailAction.loadMusicUrl: _loadMusicUrl,
     PlaylistDetailAction.updateMusicPlayList: _onUpdateMusicPlayList,
-    PlaylistDetailAction.updateIndex: _onUpdateIndex,
   });
 }
 
@@ -29,8 +28,9 @@ void _loadMusicUrl(Action action, Context<PlaylistDetailState> ctx) async {
     String url = entity.data[0].url;
     GlobalStore.store.dispatch(GlobalActionCreator.onLoadMusicUrl(
         {'musicUrl': url, 'index': action.payload['index']}));
-    if(url == null || url.isEmpty) {
+    if (url == null || url.isEmpty) {
       ctx.state.swiperController.next();
+      return;
     }
     AudioPlayerUtils.play(ctx.state.audioPlayer, url);
   }
@@ -39,10 +39,14 @@ void _loadMusicUrl(Action action, Context<PlaylistDetailState> ctx) async {
 ///更改当前播放的歌曲
 void _onChangeMusic(Action action, Context<PlaylistDetailState> ctx) {
   GlobalStore.store.dispatch(GlobalActionCreator.onChangeMusic(action.payload));
-  _onUpdateIndex(PlaylistDetailActionCreator.onUpdateIndex(action.payload['index']), ctx);
+  _onUpdateIndex(action.payload['index'], ctx);
 }
 
 void _onInit(Action action, Context<PlaylistDetailState> ctx) async {
+  if (ctx.state.globalMusic != null && ctx.state.showPlayView) {
+    _onUpdateGlobalMusicList(ctx.state.globalMusic);
+    _onUpdateIndex(ctx.state.currentIndex, ctx);
+  }
   _onLoadPlaylist(action, ctx);
 }
 
@@ -50,13 +54,40 @@ void _onInit(Action action, Context<PlaylistDetailState> ctx) async {
 void _onLoadPlaylist(Action action, Context<PlaylistDetailState> ctx) async {
   PlayListDetailEntity entity =
       await NeteaseCloudNeteaseUtils.getPlaylistDetail(ctx.state.playlistId);
+
   if (entity != null) {
     MusicModel musicModel = _getMusicModel(entity.playlist); //将歌单详情转化为通用model
-    if (!identical(ctx.state.currentPlaylistId, ctx.state.playlistId)) {
-      _onUpdateGlobalMusicList(musicModel);
-    }
+    _onUpdateGlobalMusicList(musicModel);
     ctx.dispatch(PlaylistDetailActionCreator.onLoadPlayList(musicModel));
+
+    if(ctx.state.playlistId != ctx.state.currentPlaylistId) {
+      String ids = '';
+      for (int i = 0; i < musicModel.musicList.length; i++) {
+        ids = ids + '${musicModel.musicList[i].musicId},';
+      }
+      ids = ids.substring(0, ids.length - 1);
+      MusicUrlEntity urlEntity = await NeteaseCloudNeteaseUtils.getMusicUrl(ids);
+      if (urlEntity != null) {
+        MusicModel models =
+        updateMusicUrlList(urlEntity.data, musicModel);
+        _onUpdateGlobalMusicList(models);
+        ctx.dispatch(PlaylistDetailActionCreator.onLoadPlayList(models));
+      }
+    }
+
   }
+}
+
+///更新播放列表的url
+MusicModel updateMusicUrlList(List<MusicUrlData> data, MusicModel model) {
+  model.musicList.forEach((item){
+    data.forEach((item2){
+      if(item.musicId == item2.id.toString()) {
+        item.musicUrl = item2.url;
+      }
+    });
+  });
+  return model;
 }
 
 ///更新播放列表
@@ -64,7 +95,7 @@ void _onUpdateMusicPlayList(Action action, Context<PlaylistDetailState> ctx) {
   _onUpdateGlobalMusicList(action.payload);
 }
 
-void _onUpdateGlobalMusicList(playlist) {
+void _onUpdateGlobalMusicList(MusicModel playlist) {
   GlobalStore.store.dispatch(GlobalActionCreator.onLoadPlayList(playlist));
 }
 
@@ -92,14 +123,22 @@ MusicModel _getMusicModel(PlayListDetailPlaylist music) {
   var shareCount = music.shareCount;
   var trackCount = music.trackCount;
 
-  return MusicModel(music.id.toString(),coverImgUrl, title, avatarUrl, nickname, description,
-      playCount, commentCount, shareCount, trackCount, modelList);
+  return MusicModel(
+      music.id.toString(),
+      coverImgUrl,
+      title,
+      avatarUrl,
+      nickname,
+      description,
+      playCount,
+      commentCount,
+      shareCount,
+      trackCount,
+      modelList);
 }
 
-void _onUpdateIndex(Action action, Context<PlaylistDetailState> ctx) {
-  ctx.state.swiperController.move(action.payload);
+void _onUpdateIndex(index, Context<PlaylistDetailState> ctx) {
+  ctx.state.swiperController.move(index);
 }
-
 
 void _onAction(Action action, Context<PlaylistDetailState> ctx) {}
-

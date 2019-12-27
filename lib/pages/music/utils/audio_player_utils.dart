@@ -1,4 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:fish_redux/fish_redux.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AudioPlayerUtils {
@@ -12,13 +14,10 @@ class AudioPlayerUtils {
     if(audioPlayer == null) {
       return;
     }
-    int prepare = await audioPlayer.setUrl(musicUrl);
-    if(prepare == 1) {
-      int result = await audioPlayer.resume();
-      if (result != 1) {
-        Fluttertoast.showToast(msg: '播放失败');
-      }
-    }
+
+    println(musicUrl);
+    audioPlayer.release();
+    audioPlayer.play(musicUrl);
 
   }
 

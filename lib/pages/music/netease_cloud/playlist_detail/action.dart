@@ -1,11 +1,15 @@
 import 'package:fish_redux/fish_redux.dart';
 
 //TODO replace with your own action
-enum PlaylistDetailAction { action,loadPlayList,changeMusic,loadMusicUrl,updateIndex,updateMusicPlayList }
+enum PlaylistDetailAction { action,startIndex,loadPlayList,changeMusic,loadMusicUrl,updateIndex,updateMusicPlayList }
 
 class PlaylistDetailActionCreator {
   static Action onAction() {
     return const Action(PlaylistDetailAction.action);
+  }
+
+  static Action onStartIndex(index) {
+    return Action(PlaylistDetailAction.startIndex,payload: index);
   }
 
   static Action onLoadPlayList(playlist) {

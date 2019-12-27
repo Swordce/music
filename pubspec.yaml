@@ -39,6 +39,7 @@ dependencies:
   marquee_flutter: ^0.1.2
   audioplayers: ^0.13.1
   audio_service: ^0.5.4
+  permission_handler: ^4.0.0
 
 dev_dependencies:
   flutter_test:

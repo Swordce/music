@@ -36,6 +36,7 @@ Widget buildView(
                       itemExtent: 55.0,
                       delegate: new SliverChildBuilderDelegate(
                         (context, index) => PlaylistDetailItemView(
+                          audioPlayer: state.audioPlayer,
                           dispatch: dispatch,
                           index: index,
                           currentPlaylistId: state.currentPlaylistId,
@@ -51,6 +52,8 @@ Widget buildView(
               Offstage(
                       offstage: !state.showPlayView,
                       child: GlobalBottomPlayView(
+                        startIndex:state.startIndex,
+                        context: viewService.context,
                         currentIndex: state.currentIndex,
                         playPercent: state.playProgress,
                         isPlaying: state.isPlaying,

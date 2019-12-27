@@ -3,7 +3,6 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:music/pages/music/model/common_music_model.dart';
 import 'package:music/pages/music/netease_cloud/playlist_detail/action.dart';
 import 'package:music/pages/music/utils/audio_player_utils.dart';
@@ -14,9 +13,11 @@ class GlobalBottomPlayView extends StatelessWidget {
   final double playPercent;
   final MusicModel globalMusic;
   final int currentIndex;
+  final int startIndex;
   final SwiperController swiperController;
   final AudioPlayer audioPlayer;
   final Dispatch dispatch;
+  final BuildContext context;
 
   GlobalBottomPlayView({
     Key key,
@@ -26,7 +27,7 @@ class GlobalBottomPlayView extends StatelessWidget {
     this.globalMusic,
     this.swiperController,
     this.dispatch,
-    this.audioPlayer,
+    this.audioPlayer, this.context, this.startIndex,
   }) : super(key: key);
 
   Widget _buildItem(int index) {
@@ -125,8 +126,12 @@ class GlobalBottomPlayView extends StatelessWidget {
                         return _buildItem(index);
                       },
                       onIndexChanged: (index) {
-                        dispatch(PlaylistDetailActionCreator.onLoadMusicUrl(
-                            {'id': globalMusic.musicList[index].musicId, 'index': index}));
+//                        dispatch(PlaylistDetailActionCreator.onLoadMusicUrl(
+//                            {'id': globalMusic.musicList[index].musicId, 'index': index}));
+                        String url = globalMusic.musicList[index].musicUrl;
+                        if(url != null) {
+                          AudioPlayerUtils.play(audioPlayer, globalMusic.musicList[index].musicUrl);
+                        }
                       },
                     )),
               ));

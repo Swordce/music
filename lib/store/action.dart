@@ -1,11 +1,16 @@
 import 'package:fish_redux/fish_redux.dart';
+import 'package:music/pages/music/model/common_music_model.dart';
 
-enum GlobalAction { changeMusic,loadPlayList,loadMusicUrl,updateMusicUrl,updatePlayStatus,updateProgress,updateLrc,updateCurrentPage,updateAudioPlayer }
+enum GlobalAction { initStartIndex,changeMusic,loadPlayList,loadMusicUrl,updateMusicUrl,updatePlayStatus,updateProgress,updateLrc,updateCurrentPage,updateAudioPlayer }
 
 class GlobalActionCreator {
 
-  static Action onLoadPlayList(playList) {
-    return  Action(GlobalAction.loadPlayList,payload: playList);
+  static Action onLoadPlayList(MusicModel playlist) {
+    return  Action(GlobalAction.loadPlayList,payload: playlist);
+  }
+
+  static Action onInitStartIndex(index) {
+    return  Action(GlobalAction.initStartIndex,payload: index);
   }
 
   static Action onChangeMusic(music) {

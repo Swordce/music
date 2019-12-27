@@ -9,6 +9,7 @@ abstract class BaseGlobalState {
   bool showPlayView; //底部播放控件是否展示
   double playProgress; //当前歌曲播放进度
   int currentIndex; //当前播放的歌曲
+  int startIndex;//播放控件起始位置
   String currentPlaylistId; //当前播放的歌单
   MusicModel globalMusic; //当前播放的音乐列表
   AudioPlayer audioPlayer;
@@ -44,7 +45,9 @@ class GlobalState implements BaseGlobalState, Cloneable<GlobalState> {
       ..playProgress = playProgress
       ..globalMusic = globalMusic
       ..audioPlayer = audioPlayer
-    ..swiperController = swiperController;
+      ..currentIndex = currentIndex
+    ..swiperController = swiperController
+    ..startIndex = startIndex;
   }
 
   @override
@@ -52,4 +55,7 @@ class GlobalState implements BaseGlobalState, Cloneable<GlobalState> {
 
   @override
   SwiperController swiperController;
+
+  @override
+  int startIndex = 0;
 }
