@@ -21,9 +21,7 @@ Reducer<GlobalState> buildReducer() {
 
 GlobalState _onLoadPlayList(GlobalState state, Action action) {
   GlobalState newState = state.clone();
-  MusicModel model = action.payload;
   newState.globalMusic = action.payload;
-  println('11111-${model.musicList[0].musicUrl}');
   return newState;
 }
 
@@ -48,8 +46,6 @@ GlobalState _onChangeMusic(GlobalState state, Action action) {
 
 GlobalState _onInitStartIndex(GlobalState state, Action action) {
   GlobalState newState = state.clone();
-  int index = action.payload;
-  newState.startIndex = index;
   newState.isPlaying = true;
   newState.playProgress = 0.0;
   return newState;

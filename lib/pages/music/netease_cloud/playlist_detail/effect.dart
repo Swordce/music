@@ -14,15 +14,21 @@ Effect<PlaylistDetailState> buildEffect() {
   return combineEffects(<Object, Effect<PlaylistDetailState>>{
     PlaylistDetailAction.action: _onAction,
     Lifecycle.initState: _onInit,
+    Lifecycle.dispose:_onDispose,
     PlaylistDetailAction.changeMusic: _onChangeMusic,
     PlaylistDetailAction.loadMusicUrl: _loadMusicUrl,
     PlaylistDetailAction.updateMusicPlayList: _onUpdateMusicPlayList,
-    PlaylistDetailAction.startIndex:_onSetStartIndex,
+    PlaylistDetailAction.startIndex: _onSetStartIndex,
   });
 }
 
+
+void _onDispose(Action action, Context<PlaylistDetailState> ctx) {
+
+}
 void _onSetStartIndex(Action action, Context<PlaylistDetailState> ctx) {
-  GlobalStore.store.dispatch(GlobalActionCreator.onInitStartIndex(action.payload));
+  GlobalStore.store
+      .dispatch(GlobalActionCreator.onInitStartIndex(action.payload));
 }
 
 //获取音乐url
@@ -43,16 +49,26 @@ void _loadMusicUrl(Action action, Context<PlaylistDetailState> ctx) async {
 
 ///更改当前播放的歌曲
 void _onChangeMusic(Action action, Context<PlaylistDetailState> ctx) {
+
+  if(ctx.state.currentPlaylistId != ctx.state.playlistId) {
+    _onUpdateGlobalMusicList(ctx.state.music);
+  }
+
+  if(ctx.state.initMusicIndex == 0 && action.payload['index'] > 0) {
+    ctx.dispatch(PlaylistDetailActionCreator.onInitSwiperIndex(action.payload['index']));
+  }
   GlobalStore.store.dispatch(GlobalActionCreator.onChangeMusic(action.payload));
   _onUpdateIndex(action.payload['index'], ctx);
 }
 
 void _onInit(Action action, Context<PlaylistDetailState> ctx) async {
-  if (ctx.state.globalMusic != null && ctx.state.showPlayView) {
-    _onUpdateGlobalMusicList(ctx.state.globalMusic);
-    _onUpdateIndex(ctx.state.currentIndex, ctx);
-  }
+  initSwiperIndex(action,ctx);
   _onLoadPlaylist(action, ctx);
+}
+
+///初始化swiperIndex
+void initSwiperIndex(Action action, Context<PlaylistDetailState> ctx) {
+  ctx.dispatch(PlaylistDetailActionCreator.onInitSwiperIndex(ctx.state.currentIndex));
 }
 
 ///加载歌单列表
@@ -62,34 +78,40 @@ void _onLoadPlaylist(Action action, Context<PlaylistDetailState> ctx) async {
 
   if (entity != null) {
     MusicModel musicModel = _getMusicModel(entity.playlist); //将歌单详情转化为通用model
-    _onUpdateGlobalMusicList(musicModel);
+    if (ctx.state.globalMusic == null) {
+      _onUpdateGlobalMusicList(musicModel);
+    }
     ctx.dispatch(PlaylistDetailActionCreator.onLoadPlayList(musicModel));
+    onChangePlayinglist(musicModel, ctx);
+  }
+}
 
-    if(ctx.state.playlistId != ctx.state.currentPlaylistId) {
-      String ids = '';
-      for (int i = 0; i < musicModel.musicList.length; i++) {
-        ids = ids + '${musicModel.musicList[i].musicId},';
-      }
-      ids = ids.substring(0, ids.length - 1);
-      if(ids.isNotEmpty) {
-        MusicUrlEntity urlEntity = await NeteaseCloudNeteaseUtils.getMusicUrl(ids);
-        if (urlEntity != null) {
-          MusicModel models =
-          updateMusicUrlList(urlEntity.data, musicModel);
+void onChangePlayinglist(MusicModel musicModel, Context<PlaylistDetailState> ctx) async {
+  if (ctx.state.playlistId != ctx.state.currentPlaylistId) {
+    String ids = '';
+    for (int i = 0; i < musicModel.musicList.length; i++) {
+      ids = ids + '${musicModel.musicList[i].musicId},';
+    }
+    ids = ids.substring(0, ids.length - 1);
+    if (ids.isNotEmpty) {
+      MusicUrlEntity urlEntity =
+          await NeteaseCloudNeteaseUtils.getMusicUrl(ids);
+      if (urlEntity != null) {
+        MusicModel models = updateMusicUrlList(urlEntity.data, musicModel);
+        if (ctx.state.globalMusic == null) {
           _onUpdateGlobalMusicList(models);
-          ctx.dispatch(PlaylistDetailActionCreator.onLoadPlayList(models));
         }
+        ctx.dispatch(PlaylistDetailActionCreator.onLoadPlayList(models));
       }
     }
-
   }
 }
 
 ///更新播放列表的url
 MusicModel updateMusicUrlList(List<MusicUrlData> data, MusicModel model) {
-  model.musicList.forEach((item){
-    data.forEach((item2){
-      if(item.musicId == item2.id.toString()) {
+  model.musicList.forEach((item) {
+    data.forEach((item2) {
+      if (item.musicId == item2.id.toString()) {
         item.musicUrl = item2.url;
       }
     });

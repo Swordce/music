@@ -37,7 +37,7 @@ Widget createApp() {
               p.globalMusic != appState.globalMusic ||
               p.currentIndex != appState.currentIndex ||
               p.currentPlaylistId != appState.currentPlaylistId ||
-              p.audioPlayer != appState.audioPlayer|| p.swiperController != appState.swiperController||p.startIndex != appState.startIndex) {
+              p.audioPlayer != appState.audioPlayer|| p.swiperController != appState.swiperController) {
             if (pagestate is Cloneable) {
               final Object copy = pagestate.clone();
               final BaseGlobalState newState = copy;
@@ -49,7 +49,6 @@ Widget createApp() {
               newState.currentPlaylistId = appState.currentPlaylistId;
               newState.audioPlayer = appState.audioPlayer;
               newState.swiperController = appState.swiperController;
-              newState.startIndex = appState.startIndex;
               return newState;
             }
           }

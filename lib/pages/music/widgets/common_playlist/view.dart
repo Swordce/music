@@ -1,39 +1,16 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:fish_redux/fish_redux.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:music/pages/music/model/common_music_model.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:music/pages/music/netease_cloud/playlist_detail/action.dart';
 import 'package:music/pages/music/utils/audio_player_utils.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:music/pages/music/widgets/common_playlist/action.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
-class GlobalBottomPlayView extends StatelessWidget {
-  final bool isPlaying;
-  final double playPercent;
-  final MusicModel globalMusic;
-  int initIndex = 0;
-  final int startIndex;
-  final SwiperController swiperController;
-  final AudioPlayer audioPlayer;
-  final Dispatch dispatch;
-  final BuildContext context;
-  bool isInit = false;
-  int currentIndex = 0;
+import 'state.dart';
 
-  GlobalBottomPlayView({
-    Key key,
-    this.isInit,
-    this.initIndex,
-    this.isPlaying,
-    this.playPercent,
-    this.globalMusic,
-    this.swiperController,
-    this.dispatch,
-    this.audioPlayer,
-    this.context,
-    this.startIndex,
-  }) : super(key: key);
+Widget buildView(CommonPlaylistState state, Dispatch dispatch, ViewService viewService) {
 
   Widget _buildItem(int index) {
     return Container(
@@ -43,11 +20,11 @@ class GlobalBottomPlayView extends StatelessWidget {
         child: Row(
           children: <Widget>[
             CircleAvatar(
-              backgroundImage: NetworkImage(globalMusic
-                          .musicList[index].musicImgUrl ==
-                      null
+              backgroundImage: NetworkImage(state.globalMusic
+                  .musicList[index].musicImgUrl ==
+                  null
                   ? "http://p1.music.126.net/rQ72PIOhMUosTrFcH0j8uQ==/109951164106511339.jpg"
-                  : globalMusic.musicList[index].musicImgUrl),
+                  : state.globalMusic.musicList[index].musicImgUrl),
               radius: 20,
             ),
             Expanded(
@@ -60,14 +37,14 @@ class GlobalBottomPlayView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      globalMusic.musicList[index].musicName,
+                      state.globalMusic.musicList[index].musicName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 5),
                       child: Text(
-                        globalMusic.musicList[index].musicSoner,
+                        state.globalMusic.musicList[index].musicSoner,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(fontSize: 12, color: Colors.black54),
@@ -79,11 +56,11 @@ class GlobalBottomPlayView extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                if (audioPlayer.state == AudioPlayerState.PAUSED) {
+                if (state.audioPlayer.state == AudioPlayerState.PAUSED) {
                   AudioPlayerUtils.play(
-                      audioPlayer, globalMusic.musicList[index].musicUrl);
+                      state.audioPlayer, state.globalMusic.musicList[index].musicUrl);
                 } else {
-                  AudioPlayerUtils.pause(audioPlayer);
+                  AudioPlayerUtils.pause(state.audioPlayer);
                 }
               },
               child: Container(
@@ -91,13 +68,13 @@ class GlobalBottomPlayView extends StatelessWidget {
                 child: CircularPercentIndicator(
                   radius: 30.0,
                   lineWidth: 1.5,
-                  percent: (playPercent == null ||
-                          playPercent > 1 ||
-                          playPercent < 0)
+                  percent: (state.playProgress == null ||
+                      state.playProgress > 1 ||
+                      state.playProgress < 0)
                       ? 0
-                      : playPercent,
+                      : state.playProgress,
                   center: Image.asset(
-                    isPlaying
+                    state.isPlaying
                         ? 'assets/images/pause.png'
                         : 'assets/images/play.png',
                     width: 20,
@@ -122,35 +99,32 @@ class GlobalBottomPlayView extends StatelessWidget {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-          height: 60,
-          child: new Swiper(
-            controller: swiperController,
-            itemCount: globalMusic.musicList.length,
-            index: isInit ? initIndex : currentIndex,
+
+  return Align(
+    alignment: Alignment.bottomCenter,
+    child: Container(
+        height: 60,
+        child: new Swiper(
+          controller: state.swiperController,
+          itemCount: state.globalMusic.musicList.length,
+          index: state.isInitWidget ? state.initIndex : state.pageIndex,
 //            physics:NeverScrollableScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              return _buildItem(index);
-            },
-            onIndexChanged: (index) {
-              currentIndex = index;
-              dispatch(PlaylistDetailActionCreator.onIsInitWidget({'isInitWidget':true,'playingIndex':index}));
-              String url = globalMusic.musicList[index].musicUrl;
-              if (url != null) {
-                AudioPlayerUtils.play(
-                    audioPlayer, globalMusic.musicList[index].musicUrl);
-              } else {
-                dispatch(PlaylistDetailActionCreator.onLoadMusicUrl({
-                  'id': globalMusic.musicList[index].musicId,
-                  'index': index
-                }));
-              }
-            },
-          )),
-    );
-  }
+          itemBuilder: (BuildContext context, int index) {
+            return _buildItem(index);
+          },
+          onTap: (index){
+            Fluttertoast.showToast(msg: '${state.isInitWidget}----');
+          },
+          onIndexChanged: (index) {
+            dispatch(PlaylistDetailActionCreator.onIsInitWidget({'isInitWidget':false,'pageIndex':index}));
+            String url = state.globalMusic.musicList[index].musicUrl;
+            if (url != null) {
+              AudioPlayerUtils.play(
+                  state.audioPlayer, state.globalMusic.musicList[index].musicUrl);
+            } else {
+              Fluttertoast.showToast(msg: '歌曲暂不可用');
+            }
+          },
+        )),
+  );
 }

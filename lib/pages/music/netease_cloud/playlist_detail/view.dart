@@ -49,19 +49,9 @@ Widget buildView(
                   ],
                 ),
               ),
-              Offstage(
-                      offstage: !state.showPlayView,
-                      child: GlobalBottomPlayView(
-                        startIndex:state.startIndex,
-                        context: viewService.context,
-                        currentIndex: state.currentIndex,
-                        playPercent: state.playProgress,
-                        isPlaying: state.isPlaying,
-                        globalMusic: state.globalMusic,
-                        swiperController: state.swiperController,
-                        dispatch: dispatch,
-                        audioPlayer: state.audioPlayer,
-                      ),
+              Visibility(
+                      visible: state.showPlayView,
+                      child: viewService.buildComponent('global_play_view')
                     )
             ],
           ),

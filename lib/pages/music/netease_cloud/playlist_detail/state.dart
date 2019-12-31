@@ -9,6 +9,10 @@ class PlaylistDetailState
   String playlistId; //歌单id
   String copywriter; //歌单副标题
   MusicModel music;
+  int initMusicIndex; //初始化swiper的index
+  int pageIndex = 0;
+  bool isInitWidget = true;
+  int playingIndex = 0;
 
   @override
   bool showPlayView;
@@ -30,6 +34,10 @@ class PlaylistDetailState
   @override
   PlaylistDetailState clone() {
     return PlaylistDetailState()
+    ..pageIndex = pageIndex
+    ..playingIndex = playingIndex
+      ..isInitWidget = isInitWidget
+      ..initMusicIndex = initMusicIndex
       ..swiperController = swiperController
       ..playlistId = playlistId
       ..copywriter = copywriter
@@ -40,9 +48,7 @@ class PlaylistDetailState
       ..currentIndex = currentIndex
       ..globalMusic = globalMusic
       ..currentPlaylistId = currentPlaylistId
-      ..audioPlayer = audioPlayer
-    ..startIndex = startIndex;
-  }
+      ..audioPlayer = audioPlayer;}
 
   @override
   AudioPlayer audioPlayer;
@@ -50,8 +56,6 @@ class PlaylistDetailState
   @override
   SwiperController swiperController;
 
-  @override
-  int startIndex;
 }
 
 PlaylistDetailState initState(Map<String, dynamic> args) {

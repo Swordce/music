@@ -31,6 +31,7 @@ class NeteaseConnector extends ConnOp<MusicState, NeteaseState> {
     newState.keys = state.keys;
     newState.recommendList = state.recommendList;
     newState.bannerList = state.bannerList;
+
     return newState;
   }
 }

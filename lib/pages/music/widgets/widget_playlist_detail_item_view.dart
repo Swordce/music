@@ -47,7 +47,7 @@ class PlaylistDetailItemView extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Container(
-                width: 30,
+                width: 45,
                 margin: EdgeInsets.only(left: 15, right: 25),
                 child: Text(
                   (index + 1).toString(),
