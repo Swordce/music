@@ -19,6 +19,7 @@ Effect<PlaylistDetailState> buildEffect() {
     PlaylistDetailAction.loadMusicUrl: _loadMusicUrl,
     PlaylistDetailAction.updateMusicPlayList: _onUpdateMusicPlayList,
     PlaylistDetailAction.startIndex: _onSetStartIndex,
+    PlaylistDetailAction.updateIndex:_updateGlobalIndex,
   });
 }
 
@@ -26,6 +27,11 @@ Effect<PlaylistDetailState> buildEffect() {
 void _onDispose(Action action, Context<PlaylistDetailState> ctx) {
 
 }
+
+void _updateGlobalIndex(Action action, Context<PlaylistDetailState> ctx) {
+  GlobalStore.store.dispatch(GlobalActionCreator.onUpdateCurrentPage(action.payload));
+}
+
 void _onSetStartIndex(Action action, Context<PlaylistDetailState> ctx) {
   GlobalStore.store
       .dispatch(GlobalActionCreator.onInitStartIndex(action.payload));
@@ -49,7 +55,6 @@ void _loadMusicUrl(Action action, Context<PlaylistDetailState> ctx) async {
 
 ///更改当前播放的歌曲
 void _onChangeMusic(Action action, Context<PlaylistDetailState> ctx) {
-
   if(ctx.state.currentPlaylistId != ctx.state.playlistId) {
     _onUpdateGlobalMusicList(ctx.state.music);
   }

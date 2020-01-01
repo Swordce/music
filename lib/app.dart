@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:music/pages/main_page/page.dart';
 import 'package:music/pages/music/netease_cloud/playlist_detail/page.dart';
 import 'package:music/pages/music/page.dart';
+import 'package:music/pages/music/widgets/common_playing_music/page.dart';
 import 'package:music/pages/pre_login/page.dart';
 import 'package:music/pages/splash/page.dart';
 import 'package:music/pages/test/page.dart';
@@ -20,6 +21,7 @@ Widget createApp() {
       'main_page': MainPagePage(),
       'music_page': MusicPage(),
       'playlist_detail_page': PlaylistDetailPage(),
+      'playing_music_page': PlayingMusicPage(),
       'test_page': TestPagePage(),
     },
     visitor: (String path, Page<Object, dynamic> page) {
@@ -37,7 +39,9 @@ Widget createApp() {
               p.globalMusic != appState.globalMusic ||
               p.currentIndex != appState.currentIndex ||
               p.currentPlaylistId != appState.currentPlaylistId ||
-              p.audioPlayer != appState.audioPlayer|| p.swiperController != appState.swiperController) {
+              p.audioPlayer != appState.audioPlayer ||
+              p.swiperController != appState.swiperController ||
+              p.currentPlayingStyle != appState.currentPlayingStyle || p.playTime != appState.playTime || p.duration != appState.duration) {
             if (pagestate is Cloneable) {
               final Object copy = pagestate.clone();
               final BaseGlobalState newState = copy;
@@ -49,6 +53,9 @@ Widget createApp() {
               newState.currentPlaylistId = appState.currentPlaylistId;
               newState.audioPlayer = appState.audioPlayer;
               newState.swiperController = appState.swiperController;
+              newState.currentPlayingStyle = appState.currentPlayingStyle;
+              newState.playTime = appState.playTime;
+              newState.duration = appState.duration;
               return newState;
             }
           }

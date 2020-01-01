@@ -70,7 +70,7 @@ Widget buildView(
                       selectedItemColor: Colors.red,
                       unselectedItemColor: Colors.black,
                       onTap: (int index) {
-                        if(index != 2) {
+                        if (index != 2) {
                           pageController.jumpToPage(index);
                         }
                       },
@@ -81,14 +81,22 @@ Widget buildView(
                     child: Container(
                       margin: EdgeInsets.only(bottom: 3),
                       child: RotationTransition(
-                          alignment: Alignment.center,
-                          turns: state.animationController,
-                          child:CircleAvatar(
-                            backgroundImage: NetworkImage(state.globalMusic == null
+                        alignment: Alignment.center,
+                        turns: Tween<double>(begin:0, end: 1)
+                            .animate(state.animationController),
+                        child: GestureDetector(
+                          onTap: () {
+                            dispatch(MainPageActionCreator.onJumpToPlayingMusicPage());
+                          },
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(state.globalMusic ==
+                                    null
                                 ? 'http://p1.music.126.net/rQ72PIOhMUosTrFcH0j8uQ==/109951164106511339.jpg'
-                                : state.globalMusic.musicList[state.currentIndex].musicImgUrl),
-                            radius: 25,
+                                : state.globalMusic
+                                    .musicList[state.currentIndex].musicImgUrl),
+                            radius: 24,
                           ),
+                        ),
                       ),
                     ),
                     alignment: Alignment.bottomCenter,

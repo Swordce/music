@@ -6,7 +6,8 @@ import 'package:music/pages/music/netease_cloud/playlist_detail/state.dart';
 import 'package:music/pages/music/state.dart';
 import 'package:music/store/state.dart';
 
-class CommonPlaylistState implements Cloneable<CommonPlaylistState>,BaseGlobalState {
+class CommonPlaylistState
+    implements Cloneable<CommonPlaylistState>, BaseGlobalState {
   int initIndex;
   bool isInitWidget;
   int pageIndex;
@@ -14,17 +15,18 @@ class CommonPlaylistState implements Cloneable<CommonPlaylistState>,BaseGlobalSt
   @override
   CommonPlaylistState clone() {
     return CommonPlaylistState()
-    ..pageIndex = pageIndex
-    ..isInitWidget = isInitWidget
-    ..audioPlayer = audioPlayer
-    ..currentIndex = currentIndex
-    ..currentPlaylistId = currentPlaylistId
-    ..globalMusic = globalMusic
-    ..isPlaying = isPlaying
-    ..playProgress = playProgress
-    ..showPlayView = showPlayView
-    ..swiperController = swiperController
-    ..initIndex = initIndex;
+      ..pageIndex = pageIndex
+      ..isInitWidget = isInitWidget
+      ..audioPlayer = audioPlayer
+      ..currentIndex = currentIndex
+      ..currentPlaylistId = currentPlaylistId
+      ..globalMusic = globalMusic
+      ..isPlaying = isPlaying
+      ..playProgress = playProgress
+      ..showPlayView = showPlayView
+      ..swiperController = swiperController
+      ..currentPlayingStyle = currentPlayingStyle
+      ..initIndex = initIndex;
   }
 
   @override
@@ -50,9 +52,19 @@ class CommonPlaylistState implements Cloneable<CommonPlaylistState>,BaseGlobalSt
 
   @override
   SwiperController swiperController;
+
+  @override
+  int currentPlayingStyle;
+
+  @override
+  int duration;
+
+  @override
+  int playTime;
 }
 
-class CommonPlaylistConnector extends ConnOp<PlaylistDetailState, CommonPlaylistState> {
+class CommonPlaylistConnector
+    extends ConnOp<PlaylistDetailState, CommonPlaylistState> {
   @override
   CommonPlaylistState get(PlaylistDetailState state) {
     CommonPlaylistState newState = new CommonPlaylistState();
@@ -66,6 +78,9 @@ class CommonPlaylistConnector extends ConnOp<PlaylistDetailState, CommonPlaylist
     newState.initIndex = state.initMusicIndex;
     newState.isInitWidget = state.isInitWidget;
     newState.pageIndex = state.pageIndex;
+    newState.currentPlayingStyle = state.currentPlayingStyle;
+    newState.playTime = state.playTime;
+    newState.duration = state.duration;
     return newState;
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:music/pages/music/netease_cloud/playlist_detail/action.dart';
 import 'package:music/pages/music/utils/audio_player_utils.dart';
+import 'package:music/pages/music/widgets/common_playing_music/action.dart';
 import 'package:music/pages/music/widgets/common_playlist/action.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
@@ -108,14 +109,15 @@ Widget buildView(CommonPlaylistState state, Dispatch dispatch, ViewService viewS
           controller: state.swiperController,
           itemCount: state.globalMusic.musicList.length,
           index: state.isInitWidget ? state.initIndex : state.pageIndex,
-//            physics:NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
             return _buildItem(index);
           },
           onTap: (index){
-            Fluttertoast.showToast(msg: '${state.isInitWidget}----');
+            dispatch(CommonPlaylistActionCreator.onJumpToPlayingMusicPage());
           },
           onIndexChanged: (index) {
+            println(index);
+            dispatch(PlaylistDetailActionCreator.onUpdateIndex({'index':index}));
             dispatch(PlaylistDetailActionCreator.onIsInitWidget({'isInitWidget':false,'pageIndex':index}));
             String url = state.globalMusic.musicList[index].musicUrl;
             if (url != null) {
@@ -123,6 +125,7 @@ Widget buildView(CommonPlaylistState state, Dispatch dispatch, ViewService viewS
                   state.audioPlayer, state.globalMusic.musicList[index].musicUrl);
             } else {
               Fluttertoast.showToast(msg: '歌曲暂不可用');
+              AudioPlayerUtils.pause(state.audioPlayer);
             }
           },
         )),

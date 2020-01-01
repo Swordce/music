@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,8 @@ class CommonPlaylistHeaderView extends StatelessWidget {
   final String copywriter;
   final MusicModel music;
   final Dispatch dispatch;
+  final AudioPlayer audioPlayer;
+  final bool showBottoView;
 
 
   CommonPlaylistHeaderView(
@@ -21,7 +24,7 @@ class CommonPlaylistHeaderView extends StatelessWidget {
       this.expandedHeight,
       this.sigma,
       this.copywriter,
-      this.music, this.dispatch})
+      this.music, this.dispatch, this.audioPlayer, this.showBottoView})
       : super(key: key);
 
   Widget _buildHeader(String path, int count) {
@@ -100,7 +103,7 @@ class CommonPlaylistHeaderView extends StatelessWidget {
             ],
           ),
           Container(
-            margin: EdgeInsets.only(top: 30, bottom: 10),
+            margin: EdgeInsets.only(top: 20, bottom: 10),
             child: Row(
               children: <Widget>[
                 _buildHeaderItem(
@@ -202,6 +205,10 @@ class CommonPlaylistHeaderView extends StatelessWidget {
       ),
       bottom: CommonPlaylistHeaderBottomView(
         count: music.musicList.length,
+        musicModel: music,
+        audioPlayer: audioPlayer,
+        showBottomView: showBottoView,
+        dispatch: dispatch,
       ),
     );
   }

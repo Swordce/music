@@ -1,6 +1,4 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:fish_redux/fish_redux.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class AudioPlayerUtils {
@@ -11,12 +9,14 @@ class AudioPlayerUtils {
   }
 
   static void play(AudioPlayer audioPlayer, musicUrl) async {
-    if(audioPlayer == null) {
+    if(audioPlayer == null || musicUrl == null) {
       return;
     }
-
-    println(musicUrl);
-    audioPlayer.release();
+//  Fluttertoast.showToast(msg: musicUrl);
+    //切换swiper会多次调用，所以要切换时要先release
+    if(audioPlayer.state != AudioPlayerState.PAUSED) {
+      audioPlayer.release();
+    }
     audioPlayer.play(musicUrl);
 
   }
