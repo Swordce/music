@@ -1,8 +1,8 @@
-audio_service=D:\\FlutterSDK\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\audio_service-0.5.4\\
-audioplayers=D:\\FlutterSDK\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\audioplayers-0.13.5\\
-flutter_isolate=D:\\FlutterSDK\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\flutter_isolate-1.0.0+11\\
-fluttertoast=D:\\FlutterSDK\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\fluttertoast-3.1.3\\
-path_provider=D:\\FlutterSDK\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\path_provider-1.4.4\\
-permission_handler=D:\\FlutterSDK\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\permission_handler-4.0.0\\
-shared_preferences=D:\\FlutterSDK\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\shared_preferences-0.5.4+6\\
-sqflite=D:\\FlutterSDK\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\sqflite-1.1.8\\
+audio_service=D:\\FlutterSDK\\flutter_new\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\audio_service-0.5.4\\
+audioplayers=D:\\FlutterSDK\\flutter_new\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\audioplayers-0.13.5\\
+flutter_isolate=D:\\FlutterSDK\\flutter_new\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\flutter_isolate-1.0.0+11\\
+fluttertoast=D:\\FlutterSDK\\flutter_new\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\fluttertoast-3.1.3\\
+path_provider=D:\\FlutterSDK\\flutter_new\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\path_provider-1.4.4\\
+permission_handler=D:\\FlutterSDK\\flutter_new\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\permission_handler-4.0.0\\
+shared_preferences=D:\\FlutterSDK\\flutter_new\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\shared_preferences-0.5.4+6\\
+sqflite=D:\\FlutterSDK\\flutter_new\\flutter\\.pub-cache\\hosted\\pub.flutter-io.cn\\sqflite-1.1.8\\
