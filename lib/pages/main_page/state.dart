@@ -42,7 +42,10 @@ class MainPageState implements Cloneable<MainPageState>, BaseGlobalState {
       ..globalMusic = globalMusic
       ..currentPlaylistId = currentPlaylistId
       ..swiperController = swiperController
-      ..audioPlayer = audioPlayer;
+      ..audioPlayer = audioPlayer
+      ..currentPlayingStyle = currentPlayingStyle
+      ..playTime = playTime
+      ..duration = duration;
   }
 
   @override
@@ -51,6 +54,14 @@ class MainPageState implements Cloneable<MainPageState>, BaseGlobalState {
   @override
   SwiperController swiperController;
 
+  @override
+  int currentPlayingStyle;
+
+  @override
+  int duration;
+
+  @override
+  int playTime;
 }
 
 MainPageState initState(Map<String, dynamic> args) {

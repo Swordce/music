@@ -34,8 +34,8 @@ class PlaylistDetailState
   @override
   PlaylistDetailState clone() {
     return PlaylistDetailState()
-    ..pageIndex = pageIndex
-    ..playingIndex = playingIndex
+      ..pageIndex = pageIndex
+      ..playingIndex = playingIndex
       ..isInitWidget = isInitWidget
       ..initMusicIndex = initMusicIndex
       ..swiperController = swiperController
@@ -48,7 +48,11 @@ class PlaylistDetailState
       ..currentIndex = currentIndex
       ..globalMusic = globalMusic
       ..currentPlaylistId = currentPlaylistId
-      ..audioPlayer = audioPlayer;}
+      ..audioPlayer = audioPlayer
+      ..currentPlayingStyle = currentPlayingStyle
+    ..playTime = playTime
+    ..duration = duration;
+  }
 
   @override
   AudioPlayer audioPlayer;
@@ -56,6 +60,14 @@ class PlaylistDetailState
   @override
   SwiperController swiperController;
 
+  @override
+  int currentPlayingStyle;
+
+  @override
+  int duration;
+
+  @override
+  int playTime;
 }
 
 PlaylistDetailState initState(Map<String, dynamic> args) {

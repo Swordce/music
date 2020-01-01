@@ -31,6 +31,8 @@ Widget buildView(
                       sigma: 40,
                       copywriter: state.copywriter,
                       music: state.music,
+                      audioPlayer: state.audioPlayer,
+                      showBottoView: state.showPlayView,
                     ),
                     new SliverFixedExtentList(
                       itemExtent: 55.0,

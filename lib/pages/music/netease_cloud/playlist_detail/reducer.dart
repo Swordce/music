@@ -18,7 +18,7 @@ PlaylistDetailState _onIsInitWidget(PlaylistDetailState state, Action action) {
   PlaylistDetailState newState = state.clone();
   newState.isInitWidget = action.payload['isInitWidget'];
   newState.pageIndex = action.payload['pageIndex'];
-  println('${newState.pageIndex}------${newState.isInitWidget}');
+  newState.playProgress = 0.0;
   return newState;
 }
 

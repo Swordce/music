@@ -15,6 +15,7 @@ Reducer<GlobalState> buildReducer() {
       GlobalAction.updateAudioPlayer:_onUpdateAudioPlayer,
       GlobalAction.updatePlayStatus:_onUpdatePlayStatus,
       GlobalAction.initStartIndex:_onInitStartIndex,
+      GlobalAction.updatePlayingStyle:_onUpdatePlayingStyle,
     },
   );
 }
@@ -62,6 +63,8 @@ GlobalState _onUpdateProgress(GlobalState state, Action action) {
   GlobalState newState = state.clone();
   var progress = action.payload['playProgress'];
   newState.playProgress = progress;
+  newState.playTime = action.payload['playTime'];
+  newState.duration = action.payload['duration'];
   return newState;
 }
 
@@ -78,5 +81,13 @@ GlobalState _onUpdatePlayStatus(GlobalState state, Action action) {
   GlobalState newState = state.clone();
   var status = action.payload['isPlaying'];
   newState.isPlaying = status;
+  return newState;
+}
+
+
+GlobalState _onUpdatePlayingStyle(GlobalState state, Action action) {
+  GlobalState newState = state.clone();
+  var status = action.payload;
+  newState.currentPlayingStyle = status;
   return newState;
 }

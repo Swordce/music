@@ -12,6 +12,7 @@ Reducer<MainPageState> buildReducer() {
   );
 }
 
+
 MainPageState _onAction(MainPageState state, Action action) {
   final MainPageState newState = state.clone();
   return newState;
@@ -23,3 +24,5 @@ MainPageState _onTabChanged(MainPageState state, Action action) {
   newState.selectIndex = newIndex;
   return newState;
 }
+
+

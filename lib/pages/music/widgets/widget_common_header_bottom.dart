@@ -1,12 +1,20 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:music/pages/music/model/common_music_model.dart';
+import 'package:music/pages/music/netease_cloud/playlist_detail/action.dart';
+import 'package:music/pages/music/utils/audio_player_utils.dart';
 
-class CommonPlaylistHeaderBottomView extends StatelessWidget implements PreferredSizeWidget {
-  CommonPlaylistHeaderBottomView({this.count, this.dispatch});
+class CommonPlaylistHeaderBottomView extends StatelessWidget
+    implements PreferredSizeWidget {
+  CommonPlaylistHeaderBottomView({this.count, this.dispatch, this.musicModel, this.audioPlayer, this.showBottomView});
 
   final Dispatch dispatch;
   final int count;
+  final MusicModel musicModel;
+  final AudioPlayer audioPlayer;
+  final bool showBottomView;
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +40,10 @@ class CommonPlaylistHeaderBottomView extends StatelessWidget implements Preferre
                     padding: const EdgeInsets.only(left: 6, top: 5.0),
                     child: GestureDetector(
                       onTap: () {
-                        Fluttertoast.showToast(msg: '播放全部');
+
                       },
                       child: Text(
-                        "播放全部",
+                        "全部歌曲",
                       ),
                     ),
                   ),
