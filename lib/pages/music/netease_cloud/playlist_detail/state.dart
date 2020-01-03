@@ -9,10 +9,6 @@ class PlaylistDetailState
   String playlistId; //歌单id
   String copywriter; //歌单副标题
   MusicModel music;
-  int initMusicIndex; //初始化swiper的index
-  int pageIndex = 0;
-  bool isInitWidget = true;
-  int playingIndex = 0;
 
   @override
   bool showPlayView;
@@ -35,9 +31,8 @@ class PlaylistDetailState
   PlaylistDetailState clone() {
     return PlaylistDetailState()
       ..pageIndex = pageIndex
-      ..playingIndex = playingIndex
-      ..isInitWidget = isInitWidget
-      ..initMusicIndex = initMusicIndex
+      ..isInitSwiperIndex = isInitSwiperIndex
+      ..swiperStartIndex = swiperStartIndex
       ..swiperController = swiperController
       ..playlistId = playlistId
       ..copywriter = copywriter
@@ -50,8 +45,11 @@ class PlaylistDetailState
       ..currentPlaylistId = currentPlaylistId
       ..audioPlayer = audioPlayer
       ..currentPlayingStyle = currentPlayingStyle
-    ..playTime = playTime
-    ..duration = duration;
+      ..playTime = playTime
+      ..duration = duration
+      ..playlistCenterBgImageUrl = playlistCenterBgImageUrl
+      ..bgImageUrl = bgImageUrl
+    ..isBackToMain = isBackToMain;
   }
 
   @override
@@ -68,6 +66,24 @@ class PlaylistDetailState
 
   @override
   int playTime;
+
+  @override
+  List<String> playlistCenterBgImageUrl;
+
+  @override
+  String bgImageUrl;
+
+  @override
+  bool isInitSwiperIndex;
+
+  @override
+  int swiperStartIndex;
+
+  @override
+  int pageIndex;
+
+  @override
+  bool isBackToMain;
 }
 
 PlaylistDetailState initState(Map<String, dynamic> args) {

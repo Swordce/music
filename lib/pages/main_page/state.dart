@@ -32,6 +32,10 @@ class MainPageState implements Cloneable<MainPageState>, BaseGlobalState {
   @override
   MainPageState clone() {
     return MainPageState()
+      ..isInitSwiperIndex = isInitSwiperIndex
+      ..pageIndex = pageIndex
+      ..swiperStartIndex = swiperStartIndex
+      ..playlistCenterBgImageUrl = playlistCenterBgImageUrl
       ..pages = pages
       ..animationController = animationController
       ..selectIndex = selectIndex
@@ -45,7 +49,9 @@ class MainPageState implements Cloneable<MainPageState>, BaseGlobalState {
       ..audioPlayer = audioPlayer
       ..currentPlayingStyle = currentPlayingStyle
       ..playTime = playTime
-      ..duration = duration;
+      ..duration = duration
+      ..bgImageUrl = bgImageUrl
+      ..isBackToMain = isBackToMain;
   }
 
   @override
@@ -62,6 +68,24 @@ class MainPageState implements Cloneable<MainPageState>, BaseGlobalState {
 
   @override
   int playTime;
+
+  @override
+  List<String> playlistCenterBgImageUrl;
+
+  @override
+  String bgImageUrl;
+
+  @override
+  bool isInitSwiperIndex;
+
+  @override
+  int pageIndex;
+
+  @override
+  int swiperStartIndex;
+
+  @override
+  bool isBackToMain;
 }
 
 MainPageState initState(Map<String, dynamic> args) {

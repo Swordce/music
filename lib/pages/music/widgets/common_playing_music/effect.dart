@@ -46,22 +46,28 @@ void _onPreviousMusic(Action action, Context<PlayingMusicState> ctx) {
     if (index < 0) {
       index = ctx.state.globalMusic.musicList.length - 1;
     }
-    _playMusic(index, ctx);
+    _playMusic(index, ctx,false);
   } else if (ctx.state.currentPlayingStyle == BaseGlobalState.PLAYING_RANDOM) {
     var random = Random();
     int index = random.nextInt(ctx.state.globalMusic.musicList.length);
-    _playMusic(index, ctx);
+    _playMusic(index, ctx,false);
   } else {
     AudioPlayerUtils.play(ctx.state.audioPlayer,
         ctx.state.globalMusic.musicList[ctx.state.currentIndex].musicUrl);
   }
 }
 
-void _playMusic(int index, Context<PlayingMusicState> ctx) {
-  var musicUrl = ctx.state.globalMusic.musicList[index].musicUrl;
-  AudioPlayerUtils.play(ctx.state.audioPlayer, musicUrl);
-  GlobalStore.store
-      .dispatch(GlobalActionCreator.onUpdateCurrentPage({'index': index}));
+void _playMusic(int index, Context<PlayingMusicState> ctx,bool isNext) {
+  ctx.state.swiperController.move(index);
+  if(ctx.state.isBackToMain) {
+    var musicUrl = ctx.state.globalMusic.musicList[index].musicUrl;
+    AudioPlayerUtils.play(ctx.state.audioPlayer, musicUrl);
+    GlobalStore.store.dispatch(GlobalActionCreator.onIsInitWidget(
+        {'isInitWidget': false, 'pageIndex': index}));
+    GlobalStore.store
+        .dispatch(GlobalActionCreator.onUpdateCurrentPage({'index': index}));
+  }
+
 }
 
 void _onNextMusic(Action action, Context<PlayingMusicState> ctx) {
@@ -70,11 +76,11 @@ void _onNextMusic(Action action, Context<PlayingMusicState> ctx) {
     if (index > (ctx.state.globalMusic.musicList.length - 1)) {
       index = 0;
     }
-    _playMusic(index, ctx);
+    _playMusic(index, ctx,true);
   } else if (ctx.state.currentPlayingStyle == BaseGlobalState.PLAYING_RANDOM) {
     var random = Random();
     int index = random.nextInt(ctx.state.globalMusic.musicList.length);
-    _playMusic(index, ctx);
+    _playMusic(index, ctx,true);
   } else {
     AudioPlayerUtils.play(ctx.state.audioPlayer,
         ctx.state.globalMusic.musicList[ctx.state.currentIndex].musicUrl);

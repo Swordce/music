@@ -7,6 +7,8 @@ import 'package:music/pages/music/netease_cloud/playlist_detail/action.dart';
 import 'package:music/pages/music/utils/audio_player_utils.dart';
 import 'package:music/pages/music/widgets/common_playing_music/action.dart';
 import 'package:music/pages/music/widgets/common_playlist/action.dart';
+import 'package:music/store/action.dart';
+import 'package:music/store/store.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import 'state.dart';
@@ -41,14 +43,15 @@ Widget buildView(CommonPlaylistState state, Dispatch dispatch, ViewService viewS
                       state.globalMusic.musicList[index].musicName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontSize: 14, color: Colors.black,fontWeight: FontWeight.normal,decoration: TextDecoration.none),
                     ),
                     Container(
-                      margin: EdgeInsets.only(top: 5),
+                      margin: EdgeInsets.only(top: 3),
                       child: Text(
                         state.globalMusic.musicList[index].musicSoner,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(fontSize: 12, color: Colors.black54),
+                        style: TextStyle(fontSize: 12, color: Colors.black54,fontWeight: FontWeight.normal,decoration: TextDecoration.none),
                       ),
                     )
                   ],
@@ -100,7 +103,7 @@ Widget buildView(CommonPlaylistState state, Dispatch dispatch, ViewService viewS
     );
   }
 
-
+//  println('init inde==================${state.isInitSwiperIndex} ============= ${state.swiperStartIndex} ================= ${state.pageIndex}');
   return Align(
     alignment: Alignment.bottomCenter,
     child: Container(
@@ -108,7 +111,7 @@ Widget buildView(CommonPlaylistState state, Dispatch dispatch, ViewService viewS
         child: new Swiper(
           controller: state.swiperController,
           itemCount: state.globalMusic.musicList.length,
-          index: state.isInitWidget ? state.initIndex : state.pageIndex,
+          index: state.isInitSwiperIndex ? state.swiperStartIndex : state.pageIndex,
           itemBuilder: (BuildContext context, int index) {
             return _buildItem(index);
           },
@@ -116,9 +119,10 @@ Widget buildView(CommonPlaylistState state, Dispatch dispatch, ViewService viewS
             dispatch(CommonPlaylistActionCreator.onJumpToPlayingMusicPage());
           },
           onIndexChanged: (index) {
-            println(index);
-            dispatch(PlaylistDetailActionCreator.onUpdateIndex({'index':index}));
-            dispatch(PlaylistDetailActionCreator.onIsInitWidget({'isInitWidget':false,'pageIndex':index}));
+            println('1111111111');
+            GlobalStore.store.dispatch(GlobalActionCreator.onUpdateCurrentPage({'index':index}));
+            GlobalStore.store.dispatch(GlobalActionCreator.onIsInitWidget({'isInitWidget':false,'pageIndex':index}));
+//            dispatch(PlaylistDetailActionCreator.onIsInitWidget({'isInitWidget':false,'pageIndex':index}));
             String url = state.globalMusic.musicList[index].musicUrl;
             if (url != null) {
               AudioPlayerUtils.play(

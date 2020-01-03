@@ -18,23 +18,17 @@ Effect<PlaylistDetailState> buildEffect() {
     PlaylistDetailAction.changeMusic: _onChangeMusic,
     PlaylistDetailAction.loadMusicUrl: _loadMusicUrl,
     PlaylistDetailAction.updateMusicPlayList: _onUpdateMusicPlayList,
-    PlaylistDetailAction.startIndex: _onSetStartIndex,
     PlaylistDetailAction.updateIndex:_updateGlobalIndex,
   });
 }
 
 
 void _onDispose(Action action, Context<PlaylistDetailState> ctx) {
-
+  GlobalStore.store.dispatch(GlobalActionCreator.onIsBackToMain(true));
 }
 
 void _updateGlobalIndex(Action action, Context<PlaylistDetailState> ctx) {
   GlobalStore.store.dispatch(GlobalActionCreator.onUpdateCurrentPage(action.payload));
-}
-
-void _onSetStartIndex(Action action, Context<PlaylistDetailState> ctx) {
-  GlobalStore.store
-      .dispatch(GlobalActionCreator.onInitStartIndex(action.payload));
 }
 
 //获取音乐url
@@ -55,15 +49,22 @@ void _loadMusicUrl(Action action, Context<PlaylistDetailState> ctx) async {
 
 ///更改当前播放的歌曲
 void _onChangeMusic(Action action, Context<PlaylistDetailState> ctx) {
+  //更改播放歌单为当前歌单
   if(ctx.state.currentPlaylistId != ctx.state.playlistId) {
     _onUpdateGlobalMusicList(ctx.state.music);
   }
 
-  if(ctx.state.initMusicIndex == 0 && action.payload['index'] > 0) {
-    ctx.dispatch(PlaylistDetailActionCreator.onInitSwiperIndex(action.payload['index']));
+  //播放控件未展示，直接点击歌单列表进行播放，需要先初始化swiperIndex
+  if(ctx.state.swiperStartIndex == 0 && action.payload['index'] > 0) {
+//    ctx.dispatch(PlaylistDetailActionCreator.onInitSwiperIndex(action.payload['index']));
+    GlobalStore.store.dispatch(GlobalActionCreator.onInitSwiperIndex(action.payload['index']));
   }
+
+  //修改全局正在播放的歌曲
   GlobalStore.store.dispatch(GlobalActionCreator.onChangeMusic(action.payload));
-  _onUpdateIndex(action.payload['index'], ctx);
+
+  ctx.state.swiperController.move(action.payload['index']);
+
 }
 
 void _onInit(Action action, Context<PlaylistDetailState> ctx) async {
@@ -73,7 +74,9 @@ void _onInit(Action action, Context<PlaylistDetailState> ctx) async {
 
 ///初始化swiperIndex
 void initSwiperIndex(Action action, Context<PlaylistDetailState> ctx) {
-  ctx.dispatch(PlaylistDetailActionCreator.onInitSwiperIndex(ctx.state.currentIndex));
+//  ctx.dispatch(PlaylistDetailActionCreator.onInitSwiperIndex(ctx.state.currentIndex));
+  GlobalStore.store.dispatch(GlobalActionCreator.onIsBackToMain(false));
+  GlobalStore.store.dispatch(GlobalActionCreator.onInitSwiperIndex(ctx.state.currentIndex));
 }
 
 ///加载歌单列表
@@ -169,10 +172,6 @@ MusicModel _getMusicModel(PlayListDetailPlaylist music) {
       shareCount,
       trackCount,
       modelList);
-}
-
-void _onUpdateIndex(index, Context<PlaylistDetailState> ctx) {
-  ctx.state.swiperController.move(index);
 }
 
 void _onAction(Action action, Context<PlaylistDetailState> ctx) {}

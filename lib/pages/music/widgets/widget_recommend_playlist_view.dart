@@ -1,6 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart'hide Action;
 import 'package:flutter/material.dart' hide Action;
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:music/pages/music/model/common_playlist_model.dart';
 import 'package:music/pages/music/netease_cloud/home/action.dart';
 import 'package:music/pages/music/netease_cloud/model/recommend_playlist_entity.dart';
@@ -45,7 +46,10 @@ class RecommentPlaylistView extends StatelessWidget {
               width: 80,
               margin: EdgeInsets.only(top: 20, right: 20),
               child: OutlineButton(
-                borderSide: new BorderSide(color: Colors.black),
+                onPressed: (){
+                  Navigator.of(context).pushNamed('playlist_center_page');
+                },
+                borderSide: new BorderSide(color: Colors.black54,width: 0.5),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20)),
                 child: Text(
@@ -70,7 +74,8 @@ class RecommentPlaylistView extends StatelessWidget {
                     return GestureDetector(
                       behavior: HitTestBehavior.translucent,
                       onTap: () {
-                        dispatch(NeteaseActionCreator.onJumpToPlayList({'id':playlist[index].id.toString(),'copywriter':playlist[index].copywriter}));
+                        Navigator.of(context).pushNamed('playlist_detail_page',arguments: {'id':playlist[index].id.toString(),'copywriter':playlist[index].copywriter});
+//                        dispatch(NeteaseActionCreator.onJumpToPlayList({'id':playlist[index].id.toString(),'copywriter':playlist[index].copywriter}));
                       },
                       child: CommonPlaylistView(width: 100,height: 100,path: playlist[index].picUrl,
                         title: playlist[index].playlistName, count:playlist[index].playCount,),

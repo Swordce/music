@@ -1,6 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:music/pages/music/netease_cloud/home/action.dart';
 import 'package:music/pages/music/widgets/common_swiper/page.dart';
 import 'package:music/pages/music/widgets/widget_quick_entrance_view.dart';
 import 'package:music/pages/music/widgets/widget_recommend_playlist_view.dart';
@@ -32,6 +33,9 @@ Widget buildView(NeteaseState state, Dispatch dispatch, ViewService viewService)
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
                   switch (index) {
+                    case 1:
+                      dispatch(NeteaseActionCreator.onJumpToPlaylistCenter());
+                      break;
                     default:
                       Fluttertoast.showToast(msg: state.keys[index]);
                       break;

@@ -1,12 +1,8 @@
-import 'dart:ui';
-
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:music/pages/music/widgets/widget_playlist_detail_item_view.dart';
-import 'package:music/pages/music/widgets/widget_global_bottom_play_view.dart';
 import 'package:music/pages/music/widgets/widget_common_header.dart';
+import 'package:music/pages/music/widgets/widget_playlist_detail_item_view.dart';
 
-import 'action.dart';
 import 'state.dart';
 
 Widget buildView(

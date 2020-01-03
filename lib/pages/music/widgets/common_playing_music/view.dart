@@ -33,39 +33,39 @@ Widget buildView(
             height: double.infinity,
           ),
         ),
-        AppBar(
-          backgroundColor: Colors.transparent,
-          titleSpacing: 0,
-          title: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                state.globalMusic.musicList[state.currentIndex].musicName,
-                style: TextStyle(
-                  fontSize: 16,
+          AppBar(
+            backgroundColor: Colors.transparent,
+            titleSpacing: 0,
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  state.globalMusic.musicList[state.currentIndex].musicName,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
                 ),
-              ),
-              Container(
-                height: 2,
-              ),
-              Text(
-                state.globalMusic.musicList[state.currentIndex].musicSoner,
-                style: TextStyle(
-                  fontSize: 11,
+                Container(
+                  height: 2,
+                ),
+                Text(
+                  state.globalMusic.musicList[state.currentIndex].musicSoner,
+                  style: TextStyle(
+                    fontSize: 11,
+                  ),
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.share,
+                  color: Colors.white,
                 ),
               ),
             ],
           ),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.share,
-                color: Colors.white,
-              ),
-            ),
-          ],
-        ),
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -154,7 +154,7 @@ Widget buildView(
                         value:
                             (state.playProgress >= 0 && state.playProgress <= 1)
                                 ? state.playProgress
-                                : 0,
+                                : 1,
                         activeColor: Colors.white,
                         inactiveColor: Colors.white12,
                         min: 0,

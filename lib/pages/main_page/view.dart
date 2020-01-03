@@ -89,8 +89,8 @@ Widget buildView(
                             dispatch(MainPageActionCreator.onJumpToPlayingMusicPage());
                           },
                           child: CircleAvatar(
-                            backgroundImage: NetworkImage(state.globalMusic ==
-                                    null
+                            backgroundImage: NetworkImage((state.globalMusic ==
+                                null || state.globalMusic.musicList.length == 0)
                                 ? 'http://p1.music.126.net/rQ72PIOhMUosTrFcH0j8uQ==/109951164106511339.jpg'
                                 : state.globalMusic
                                     .musicList[state.currentIndex].musicImgUrl),

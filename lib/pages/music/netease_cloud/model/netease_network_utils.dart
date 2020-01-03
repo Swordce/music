@@ -3,15 +3,36 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:music/application.dart';
 import 'package:music/pages/music/netease_cloud/model/music_url_entity.dart';
+import 'package:music/pages/music/netease_cloud/model/playlist_center_category_entity.dart';
+import 'package:music/pages/music/netease_cloud/model/playlist_center_entity.dart';
 import 'package:music/utils/net_utils.dart';
 
-
 import 'home_banner_entity.dart';
+import 'play_list_detail_entity.dart';
 import 'recommend_playlist_entity.dart';
 import 'user_entity.dart';
-import 'play_list_detail_entity.dart';
 
 class NeteaseCloudNeteaseUtils {
+
+  //获取歌单列表
+  static Future<PlaylistCenterEntity> getPlaylist(var tag) async {
+    var response = await NetUtils.getInstance().get('/top/playlist/highquality',data: {'cat':tag});
+    if(response != null) {
+      final jsonMap = json.decode(response.data);
+      return PlaylistCenterEntity.fromJson(jsonMap);
+    }
+    return null;
+  }
+  
+  //热门歌单分类
+  static Future<PlaylistCenterCategoryEntity> getHotPlaylist() async {
+    var response = await NetUtils.getInstance().get('/playlist/hot');
+    if(response != null) {
+      final jsonMap = json.decode(response.data);
+      return PlaylistCenterCategoryEntity.fromJson(jsonMap);
+    }
+    return null;
+  }
 
   //歌曲Url
   static Future<MusicUrlEntity> getMusicUrl(String id) async {

@@ -4,6 +4,8 @@ import 'package:music/pages/main_page/page.dart';
 import 'package:music/pages/music/netease_cloud/playlist_detail/page.dart';
 import 'package:music/pages/music/page.dart';
 import 'package:music/pages/music/widgets/common_playing_music/page.dart';
+import 'package:music/pages/music/widgets/playlist_center/page.dart';
+import 'package:music/pages/music/widgets/playlist_item/page.dart';
 import 'package:music/pages/pre_login/page.dart';
 import 'package:music/pages/splash/page.dart';
 import 'package:music/pages/test/page.dart';
@@ -22,6 +24,8 @@ Widget createApp() {
       'music_page': MusicPage(),
       'playlist_detail_page': PlaylistDetailPage(),
       'playing_music_page': PlayingMusicPage(),
+      'playlist_center_page': PlaylistCenterPage(),
+      'playlist_center_item_page': PlaylistCenterItemPage(),
       'test_page': TestPagePage(),
     },
     visitor: (String path, Page<Object, dynamic> page) {
@@ -41,7 +45,15 @@ Widget createApp() {
               p.currentPlaylistId != appState.currentPlaylistId ||
               p.audioPlayer != appState.audioPlayer ||
               p.swiperController != appState.swiperController ||
-              p.currentPlayingStyle != appState.currentPlayingStyle || p.playTime != appState.playTime || p.duration != appState.duration) {
+              p.currentPlayingStyle != appState.currentPlayingStyle ||
+              p.playTime != appState.playTime ||
+              p.duration != appState.duration ||
+              p.playlistCenterBgImageUrl != appState.playlistCenterBgImageUrl ||
+              p.bgImageUrl != appState.bgImageUrl ||
+              p.isInitSwiperIndex != appState.isInitSwiperIndex ||
+              p.swiperStartIndex != appState.swiperStartIndex ||
+              p.pageIndex != appState.pageIndex ||
+              p.isBackToMain != appState.isBackToMain) {
             if (pagestate is Cloneable) {
               final Object copy = pagestate.clone();
               final BaseGlobalState newState = copy;
@@ -56,6 +68,13 @@ Widget createApp() {
               newState.currentPlayingStyle = appState.currentPlayingStyle;
               newState.playTime = appState.playTime;
               newState.duration = appState.duration;
+              newState.playlistCenterBgImageUrl =
+                  appState.playlistCenterBgImageUrl;
+              newState.bgImageUrl = appState.bgImageUrl;
+              newState.isInitSwiperIndex = appState.isInitSwiperIndex;
+              newState.swiperStartIndex = appState.swiperStartIndex;
+              newState.pageIndex = appState.pageIndex;
+              newState.isBackToMain = appState.isBackToMain;
               return newState;
             }
           }

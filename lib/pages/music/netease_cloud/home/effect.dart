@@ -8,11 +8,16 @@ Effect<NeteaseState> buildEffect() {
   return combineEffects(<Object, Effect<NeteaseState>>{
     NeteaseAction.action: _onAction,
     NeteaseAction.jumpToPlayList: _onJumpToPlayList,
+    NeteaseAction.jumpToPlaylistCenter:_onJumpToPlaylistCenter,
   });
 }
 
 void _onJumpToPlayList(Action action, Context<NeteaseState> ctx) {
   Navigator.of(ctx.context).pushNamed('playlist_detail_page',arguments: action.payload);
+}
+
+void _onJumpToPlaylistCenter(Action action, Context<NeteaseState> ctx) {
+  Navigator.of(ctx.context).pushNamed('playlist_center_page');
 }
 
 void _onAction(Action action, Context<NeteaseState> ctx) {

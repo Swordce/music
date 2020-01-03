@@ -1,7 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 
 //TODO replace with your own action
-enum PlaylistDetailAction { action,initSwiperIndex,isInitWidget,startIndex,loadPlayList,changeMusic,loadMusicUrl,updateIndex,updateMusicPlayList }
+enum PlaylistDetailAction { action,initSwiperIndex,isInitWidget,loadPlayList,changeMusic,loadMusicUrl,updateIndex,updateMusicPlayList }
 
 class PlaylistDetailActionCreator {
   static Action onAction() {
@@ -16,9 +16,9 @@ class PlaylistDetailActionCreator {
     return Action(PlaylistDetailAction.initSwiperIndex,payload: index);
   }
 
-  static Action onStartIndex(index) {
-    return Action(PlaylistDetailAction.startIndex,payload: index);
-  }
+//  static Action onStartIndex(index) {
+//    return Action(PlaylistDetailAction.startIndex,payload: index);
+//  }
 
   static Action onLoadPlayList(playlist) {
     return Action(PlaylistDetailAction.loadPlayList,payload: playlist);

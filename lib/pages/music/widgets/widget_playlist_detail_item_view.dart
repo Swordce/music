@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 import 'package:music/pages/music/model/common_music_model.dart';
 import 'package:music/pages/music/netease_cloud/playlist_detail/action.dart';
 import 'package:music/pages/music/utils/audio_player_utils.dart';
+import 'package:music/store/action.dart';
+import 'package:music/store/store.dart';
 
 class PlaylistDetailItemView extends StatelessWidget {
   final int index;
@@ -42,7 +44,9 @@ class PlaylistDetailItemView extends StatelessWidget {
               'showPlayView': true,
               'isPlaying': false,
             }));
-            dispatch(PlaylistDetailActionCreator.onStartIndex(index));
+//            dispatch(PlaylistDetailActionCreator.onStartIndex(index));
+            GlobalStore.store
+                .dispatch(GlobalActionCreator.onInitStartIndex(index));
           },
           child: Row(
             children: <Widget>[

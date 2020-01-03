@@ -60,17 +60,20 @@ void _initAuidoPlayer(Action action, Context<MainPageState> ctx) {
       Fluttertoast.showToast(msg: '播放完成');
       GlobalStore.store.dispatch(GlobalActionCreator.onUpdatePlayStatus({'isPlaying':true}));
       if(ctx.state.currentPlayingStyle == BaseGlobalState.PLAING_ORDER) {
-        ctx.state.swiperController.next();
+        int index = ctx.state.currentIndex + 1;
+        if (index > (ctx.state.globalMusic.musicList.length - 1)) {
+          index = 0;
+        }
+        _playMusic(index, ctx);
       }else if(ctx.state.currentPlayingStyle == BaseGlobalState.PLAYING_RANDOM) {
         var random = Random();
         int index = random.nextInt(ctx.state.globalMusic.musicList.length);
-        ctx.state.swiperController.move(index);
+        _playMusic(index, ctx);
       }else {
         AudioPlayerUtils.play(ctx.state.audioPlayer, ctx.state.globalMusic.musicList[ctx.state.currentIndex].musicUrl);
       }
     }
   });
-
 
   ctx.state.audioPlayer.onAudioPositionChanged.listen((p) async {
     // p参数可以获取当前进度，也是可以调整的，比如p.inMilliseconds
@@ -83,6 +86,17 @@ void _initAuidoPlayer(Action action, Context<MainPageState> ctx) {
 
   GlobalStore.store.dispatch(
       GlobalActionCreator.updateAudioPlayer({'audioPlayer': ctx.state.audioPlayer,'swiperController':SwiperController()}));
+}
+
+void _playMusic(int index, Context<MainPageState> ctx) {
+  ctx.state.swiperController.move(index);
+  if(ctx.state.isBackToMain) {
+    var musicUrl = ctx.state.globalMusic.musicList[index].musicUrl;
+    AudioPlayerUtils.play(ctx.state.audioPlayer, musicUrl);
+    GlobalStore.store
+        .dispatch(GlobalActionCreator.onUpdateCurrentPage({'index': index}));
+    GlobalStore.store.dispatch(GlobalActionCreator.onIsInitWidget({'isInitWidget':false,'pageIndex':index}));
+  }
 }
 
 void _onJumpToPlayingMusicPage(Action action, Context<MainPageState> ctx) {

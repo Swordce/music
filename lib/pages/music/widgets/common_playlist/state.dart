@@ -4,29 +4,15 @@ import 'package:flutter_swiper/src/swiper_controller.dart';
 import 'package:music/pages/music/model/common_music_model.dart';
 import 'package:music/pages/music/netease_cloud/playlist_detail/state.dart';
 import 'package:music/pages/music/state.dart';
+import 'package:music/pages/music/widgets/playlist_center/state.dart';
 import 'package:music/store/state.dart';
 
 class CommonPlaylistState
     implements Cloneable<CommonPlaylistState>, BaseGlobalState {
-  int initIndex;
-  bool isInitWidget;
-  int pageIndex;
 
   @override
   CommonPlaylistState clone() {
-    return CommonPlaylistState()
-      ..pageIndex = pageIndex
-      ..isInitWidget = isInitWidget
-      ..audioPlayer = audioPlayer
-      ..currentIndex = currentIndex
-      ..currentPlaylistId = currentPlaylistId
-      ..globalMusic = globalMusic
-      ..isPlaying = isPlaying
-      ..playProgress = playProgress
-      ..showPlayView = showPlayView
-      ..swiperController = swiperController
-      ..currentPlayingStyle = currentPlayingStyle
-      ..initIndex = initIndex;
+    return CommonPlaylistState();
   }
 
   @override
@@ -61,6 +47,24 @@ class CommonPlaylistState
 
   @override
   int playTime;
+
+  @override
+  List<String> playlistCenterBgImageUrl;
+
+  @override
+  String bgImageUrl;
+
+  @override
+  bool isInitSwiperIndex;
+
+  @override
+  int pageIndex;
+
+  @override
+  int swiperStartIndex;
+
+  @override
+  bool isBackToMain;
 }
 
 class CommonPlaylistConnector
@@ -75,12 +79,40 @@ class CommonPlaylistConnector
     newState.playProgress = state.playProgress;
     newState.showPlayView = state.showPlayView;
     newState.swiperController = state.swiperController;
-    newState.initIndex = state.initMusicIndex;
-    newState.isInitWidget = state.isInitWidget;
-    newState.pageIndex = state.pageIndex;
     newState.currentPlayingStyle = state.currentPlayingStyle;
     newState.playTime = state.playTime;
     newState.duration = state.duration;
+    newState.bgImageUrl = state.bgImageUrl;
+    newState.playlistCenterBgImageUrl = state.playlistCenterBgImageUrl;
+    newState.isInitSwiperIndex = state.isInitSwiperIndex;
+    newState.pageIndex = state.pageIndex;
+    newState.swiperStartIndex = state.swiperStartIndex;
+    newState.isBackToMain = state.isBackToMain;
+    return newState;
+  }
+}
+
+class CommonPlaylistConnector2
+    extends ConnOp<PlaylistCenterState, CommonPlaylistState> {
+  @override
+  CommonPlaylistState get(PlaylistCenterState state) {
+    CommonPlaylistState newState = new CommonPlaylistState();
+    newState.isPlaying = state.isPlaying;
+    newState.audioPlayer = state.audioPlayer;
+    newState.currentIndex = state.currentIndex;
+    newState.globalMusic = state.globalMusic;
+    newState.playProgress = state.playProgress;
+    newState.showPlayView = state.showPlayView;
+    newState.swiperController = state.swiperController;
+    newState.currentPlayingStyle = state.currentPlayingStyle;
+    newState.playTime = state.playTime;
+    newState.duration = state.duration;
+    newState.bgImageUrl = state.bgImageUrl;
+    newState.playlistCenterBgImageUrl = state.playlistCenterBgImageUrl;
+    newState.isInitSwiperIndex = state.isInitSwiperIndex;
+    newState.pageIndex = state.pageIndex;
+    newState.swiperStartIndex = state.swiperStartIndex;
+    newState.isBackToMain = state.isBackToMain;
     return newState;
   }
 }

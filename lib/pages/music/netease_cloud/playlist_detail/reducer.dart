@@ -8,25 +8,25 @@ Reducer<PlaylistDetailState> buildReducer() {
     <Object, Reducer<PlaylistDetailState>>{
       PlaylistDetailAction.action: _onAction,
       PlaylistDetailAction.loadPlayList:_onLoadPlayList,
-      PlaylistDetailAction.initSwiperIndex: _onInitSwiperIndex,
-      PlaylistDetailAction.isInitWidget: _onIsInitWidget,
+//      PlaylistDetailAction.initSwiperIndex: _onInitSwiperIndex,
+//      PlaylistDetailAction.isInitWidget: _onIsInitWidget,
     },
   );
 }
 
-PlaylistDetailState _onIsInitWidget(PlaylistDetailState state, Action action) {
-  PlaylistDetailState newState = state.clone();
-  newState.isInitWidget = action.payload['isInitWidget'];
-  newState.pageIndex = action.payload['pageIndex'];
-  newState.playProgress = 0.0;
-  return newState;
-}
-
-PlaylistDetailState _onInitSwiperIndex(PlaylistDetailState state, Action action) {
-  PlaylistDetailState newState = state.clone();
-  newState.initMusicIndex = action.payload;
-  return newState;
-}
+//PlaylistDetailState _onIsInitWidget(PlaylistDetailState state, Action action) {
+//  PlaylistDetailState newState = state.clone();
+//  newState.isInitWidget = action.payload['isInitWidget'];
+//  newState.pageIndex = action.payload['pageIndex'];
+//  newState.playProgress = 0.0;
+//  return newState;
+//}
+//
+//PlaylistDetailState _onInitSwiperIndex(PlaylistDetailState state, Action action) {
+//  PlaylistDetailState newState = state.clone();
+//  newState.initMusicIndex = action.payload;
+//  return newState;
+//}
 
 PlaylistDetailState _onLoadPlayList(PlaylistDetailState state, Action action) {
   final PlaylistDetailState newState = state.clone();
