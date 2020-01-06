@@ -32,7 +32,7 @@ void _initData(Action action, Context<MusicState> ctx) async {
 
 Future<HomeBannerEntity> _onGetSwiperListAction(
     Action action, Context<MusicState> ctx) async {
-  HomeBannerEntity banners = await NeteaseCloudNeteaseUtils.getBanner();
+  HomeBannerEntity banners = await NeteaseCloudNetUtils.getBanner();
   if (banners != null && banners.code == 200) {
     return banners;
   }
@@ -42,7 +42,7 @@ Future<HomeBannerEntity> _onGetSwiperListAction(
 Future<List<CommonPlaylistModel>> _onGetRecommendPlaylistAction(
     Action action, Context<MusicState> ctx) async {
   RecommendPlaylistEntity entity =
-      await NeteaseCloudNeteaseUtils.getRecommendPlaylist();
+      await NeteaseCloudNetUtils.getRecommendPlaylist();
   if (entity != null && entity.code == 200) {
     List<CommonPlaylistModel> models = [];
     List<RecommandPlaylistResult> result = entity.result;

@@ -9,6 +9,7 @@ Effect<NeteaseState> buildEffect() {
     NeteaseAction.action: _onAction,
     NeteaseAction.jumpToPlayList: _onJumpToPlayList,
     NeteaseAction.jumpToPlaylistCenter:_onJumpToPlaylistCenter,
+    NeteaseAction.jumpToRankPage:_onJumpToRankPage,
   });
 }
 
@@ -18,6 +19,9 @@ void _onJumpToPlayList(Action action, Context<NeteaseState> ctx) {
 
 void _onJumpToPlaylistCenter(Action action, Context<NeteaseState> ctx) {
   Navigator.of(ctx.context).pushNamed('playlist_center_page');
+}
+void _onJumpToRankPage(Action action, Context<NeteaseState> ctx) {
+  Navigator.of(ctx.context).pushNamed('common_rank_page');
 }
 
 void _onAction(Action action, Context<NeteaseState> ctx) {

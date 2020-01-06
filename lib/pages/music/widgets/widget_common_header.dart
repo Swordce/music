@@ -18,13 +18,15 @@ class CommonPlaylistHeaderView extends StatelessWidget {
   final AudioPlayer audioPlayer;
   final bool showBottoView;
 
-
   CommonPlaylistHeaderView(
       {Key key,
       this.expandedHeight,
       this.sigma,
       this.copywriter,
-      this.music, this.dispatch, this.audioPlayer, this.showBottoView})
+      this.music,
+      this.dispatch,
+      this.audioPlayer,
+      this.showBottoView})
       : super(key: key);
 
   Widget _buildHeader(String path, int count) {
@@ -106,10 +108,10 @@ class CommonPlaylistHeaderView extends StatelessWidget {
             margin: EdgeInsets.only(top: 20, bottom: 10),
             child: Row(
               children: <Widget>[
-                _buildHeaderItem(
-                    'assets/images/icon_comment.png', music.commentCount.toString()),
-                _buildHeaderItem(
-                    'assets/images/icon_share.png', music.shareCount.toString()),
+                _buildHeaderItem('assets/images/icon_comment.png',
+                    music.commentCount.toString()),
+                _buildHeaderItem('assets/images/icon_share.png',
+                    music.shareCount.toString()),
                 _buildHeaderItem('assets/images/icon_download.png', '下载'),
                 _buildHeaderItem('assets/images/icon_multi_select.png', '多选'),
               ],
@@ -162,11 +164,14 @@ class CommonPlaylistHeaderView extends StatelessWidget {
               '歌单',
               style: TextStyle(fontSize: 18),
             ),
-            Text(
-              copywriter,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 12),
+            Visibility(
+              visible: copywriter != null,
+              child: Text(
+                copywriter == null ? '' : copywriter,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 12),
+              ),
             )
           ],
         ),

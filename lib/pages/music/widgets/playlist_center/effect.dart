@@ -23,14 +23,13 @@ void _onDispose(Action action,Context<PlaylistCenterState> ctx) {
 }
 
 void _onInit(Action action, Context<PlaylistCenterState> ctx) {
-
+  initSwiperIndex(action, ctx);
   _onInitController(action, ctx);
   _requestPlaylistCategory(ctx);
 }
 
 ///初始化swiperIndex
 void initSwiperIndex(Action action, Context<PlaylistCenterState> ctx) {
-//  ctx.dispatch(PlaylistDetailActionCreator.onInitSwiperIndex(ctx.state.currentIndex));
   GlobalStore.store.dispatch(GlobalActionCreator.onIsBackToMain(false));
   GlobalStore.store.dispatch(GlobalActionCreator.onInitSwiperIndex(ctx.state.currentIndex));
 }
@@ -52,7 +51,7 @@ void _onInitController(Action action, Context<PlaylistCenterState> ctx) {
 }
 
 void _requestPlaylistCategory(Context<PlaylistCenterState> ctx) async {
-  PlaylistCenterCategoryEntity entity = await NeteaseCloudNeteaseUtils.getHotPlaylist();
+  PlaylistCenterCategoryEntity entity = await NeteaseCloudNetUtils.getHotPlaylist();
   if(entity != null) {
     ctx.dispatch(PlaylistCenterActionCreator.onInitController(entity.tags));
     ctx.dispatch(PlaylistCenterActionCreator.onUpdateCategory(entity.tags));

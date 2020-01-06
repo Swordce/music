@@ -14,7 +14,7 @@ Effect<PlaylistCenterItemState> buildEffect() {
 }
 
 void _onInit(Action action, Context<PlaylistCenterItemState> ctx) async {
-  PlaylistCenterEntity listEntity = await NeteaseCloudNeteaseUtils.getPlaylist(ctx.state.tag);
+  PlaylistCenterEntity listEntity = await NeteaseCloudNetUtils.getPlaylist(ctx.state.tag);
   if(listEntity != null) {
     ctx.dispatch(PlaylistCenterItemActionCreator.onUpdatePlaylist(listEntity));
     GlobalStore.store.dispatch(GlobalActionCreator.updatePlaylistCenterBgImageUrl(listEntity.playlists[0].coverImgUrl));

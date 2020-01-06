@@ -24,7 +24,7 @@ void _onLoginAction(Action action, Context<NeteaseCloudLoginState> ctx) async {
     Fluttertoast.showToast(msg: "请输入手机号或密码");
     return;
   }
-  NeteaseCloudUserEntity user = await NeteaseCloudNeteaseUtils.login(ctx.context,phone,password);
+  NeteaseCloudUserEntity user = await NeteaseCloudNetUtils.login(ctx.context,phone,password);
   if(user != null && user.code == 200) {
     _onLoginSuccess(user,action,ctx,phone);
   }else {

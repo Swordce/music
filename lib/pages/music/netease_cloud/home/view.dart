@@ -36,6 +36,9 @@ Widget buildView(NeteaseState state, Dispatch dispatch, ViewService viewService)
                     case 1:
                       dispatch(NeteaseActionCreator.onJumpToPlaylistCenter());
                       break;
+                    case 2:
+                      dispatch(NeteaseActionCreator.onJumpToRankPage());
+                      break;
                     default:
                       Fluttertoast.showToast(msg: state.keys[index]);
                       break;

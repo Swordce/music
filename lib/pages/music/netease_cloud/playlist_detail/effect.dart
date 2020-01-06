@@ -34,7 +34,7 @@ void _updateGlobalIndex(Action action, Context<PlaylistDetailState> ctx) {
 //获取音乐url
 void _loadMusicUrl(Action action, Context<PlaylistDetailState> ctx) async {
   MusicUrlEntity entity =
-      await NeteaseCloudNeteaseUtils.getMusicUrl(action.payload['id']);
+      await NeteaseCloudNetUtils.getMusicUrl(action.payload['id']);
   if (entity != null) {
     String url = entity.data[0].url;
     GlobalStore.store.dispatch(GlobalActionCreator.onLoadMusicUrl(
@@ -74,7 +74,6 @@ void _onInit(Action action, Context<PlaylistDetailState> ctx) async {
 
 ///初始化swiperIndex
 void initSwiperIndex(Action action, Context<PlaylistDetailState> ctx) {
-//  ctx.dispatch(PlaylistDetailActionCreator.onInitSwiperIndex(ctx.state.currentIndex));
   GlobalStore.store.dispatch(GlobalActionCreator.onIsBackToMain(false));
   GlobalStore.store.dispatch(GlobalActionCreator.onInitSwiperIndex(ctx.state.currentIndex));
 }
@@ -82,7 +81,7 @@ void initSwiperIndex(Action action, Context<PlaylistDetailState> ctx) {
 ///加载歌单列表
 void _onLoadPlaylist(Action action, Context<PlaylistDetailState> ctx) async {
   PlayListDetailEntity entity =
-      await NeteaseCloudNeteaseUtils.getPlaylistDetail(ctx.state.playlistId);
+      await NeteaseCloudNetUtils.getPlaylistDetail(ctx.state.playlistId);
 
   if (entity != null) {
     MusicModel musicModel = _getMusicModel(entity.playlist); //将歌单详情转化为通用model
@@ -103,7 +102,7 @@ void onChangePlayinglist(MusicModel musicModel, Context<PlaylistDetailState> ctx
     ids = ids.substring(0, ids.length - 1);
     if (ids.isNotEmpty) {
       MusicUrlEntity urlEntity =
-          await NeteaseCloudNeteaseUtils.getMusicUrl(ids);
+          await NeteaseCloudNetUtils.getMusicUrl(ids);
       if (urlEntity != null) {
         MusicModel models = updateMusicUrlList(urlEntity.data, musicModel);
         if (ctx.state.globalMusic == null) {

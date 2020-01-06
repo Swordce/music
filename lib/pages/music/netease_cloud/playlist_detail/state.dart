@@ -89,6 +89,8 @@ class PlaylistDetailState
 PlaylistDetailState initState(Map<String, dynamic> args) {
   PlaylistDetailState state = PlaylistDetailState();
   state.playlistId = args['id'];
-  state.copywriter = args['copywriter'];
+  if(args['copywriter'] != null) {
+    state.copywriter = args['copywriter'];
+  }
   return state;
 }

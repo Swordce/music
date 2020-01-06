@@ -1,7 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 
 //TODO replace with your own action
-enum NeteaseAction { action,jumpToPlayList,jumpToPlaylistCenter }
+enum NeteaseAction { action,jumpToPlayList,jumpToPlaylistCenter,jumpToRankPage }
 
 class NeteaseActionCreator {
   static Action onAction() {
@@ -17,5 +17,8 @@ class NeteaseActionCreator {
     return  Action(NeteaseAction.jumpToPlaylistCenter);
   }
 
+  static Action onJumpToRankPage() {
+    return  Action(NeteaseAction.jumpToRankPage);
+  }
 
 }

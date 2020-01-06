@@ -4,6 +4,7 @@ import 'package:music/pages/main_page/page.dart';
 import 'package:music/pages/music/netease_cloud/playlist_detail/page.dart';
 import 'package:music/pages/music/page.dart';
 import 'package:music/pages/music/widgets/common_playing_music/page.dart';
+import 'package:music/pages/music/widgets/common_rank/page.dart';
 import 'package:music/pages/music/widgets/playlist_center/page.dart';
 import 'package:music/pages/music/widgets/playlist_item/page.dart';
 import 'package:music/pages/pre_login/page.dart';
@@ -27,6 +28,7 @@ Widget createApp() {
       'playlist_center_page': PlaylistCenterPage(),
       'playlist_center_item_page': PlaylistCenterItemPage(),
       'test_page': TestPagePage(),
+      'common_rank_page':RankPage(),
     },
     visitor: (String path, Page<Object, dynamic> page) {
       /// 满足条件 Page<T> ，T 是 GlobalBaseState 的子类。
