@@ -26,8 +26,8 @@ class NeteaseCloudNetUtils {
   }
   
   //获取歌单列表
-  static Future<PlaylistCenterEntity> getPlaylist(var tag) async {
-    var response = await NetUtils.getInstance().get('/top/playlist/highquality',data: {'cat':tag});
+  static Future<PlaylistCenterEntity> getPlaylist(var tag,var updateTime) async {
+    var response = await NetUtils.getInstance().get('/top/playlist/highquality',data: {'cat':tag,'limit':15,'before':updateTime});
     if(response != null) {
       final jsonMap = json.decode(response.data);
       return PlaylistCenterEntity.fromJson(jsonMap);

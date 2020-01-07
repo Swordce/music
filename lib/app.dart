@@ -1,4 +1,5 @@
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:music/pages/main_page/page.dart';
 import 'package:music/pages/music/netease_cloud/playlist_detail/page.dart';
@@ -10,6 +11,7 @@ import 'package:music/pages/music/widgets/playlist_item/page.dart';
 import 'package:music/pages/pre_login/page.dart';
 import 'package:music/pages/splash/page.dart';
 import 'package:music/pages/test/page.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'pages/music/netease_cloud/login/page.dart';
 import 'store/state.dart';
@@ -86,24 +88,51 @@ Widget createApp() {
     },
   );
 
-  return MaterialApp(
-    title: 'MusicDemo',
-    theme: ThemeData(
-      primarySwatch: Colors.blue,
+  return RefreshConfiguration(
+    headerBuilder:()=> ClassicHeader(),
+    footerBuilder:()=> CustomFooter(
+      builder: (BuildContext context,LoadStatus mode){
+        Widget body ;
+        if(mode==LoadStatus.idle){
+          body =  Text("上拉加载更多");
+        }
+        else if(mode==LoadStatus.loading){
+          body =  CupertinoActivityIndicator();
+        }
+        else if(mode == LoadStatus.failed){
+          body = Text("加载失败");
+        }
+        else if(mode == LoadStatus.canLoading){
+          body = Text("release to load more");
+        }
+        else{
+          body = Text("没有更多了~");
+        }
+        return Container(
+          height: 55.0,
+          child: Center(child:body),
+        );
+      },
     ),
-    home: routes.buildPage('main_page', {
-      'pages': [
-        routes.buildPage('music_page', null),
-        routes.buildPage('test_page', null),
-        routes.buildPage('test_page', null),
-        routes.buildPage('test_page', null),
-        routes.buildPage('test_page', null)
-      ]
-    }), //把他作为默认页面
-    onGenerateRoute: (RouteSettings settings) {
-      return MaterialPageRoute<Object>(builder: (BuildContext context) {
-        return routes.buildPage(settings.name, settings.arguments);
-      });
-    },
+    child: MaterialApp(
+      title: 'MusicDemo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: routes.buildPage('main_page', {
+        'pages': [
+          routes.buildPage('music_page', null),
+          routes.buildPage('test_page', null),
+          routes.buildPage('test_page', null),
+          routes.buildPage('test_page', null),
+          routes.buildPage('test_page', null)
+        ]
+      }), //把他作为默认页面
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute<Object>(builder: (BuildContext context) {
+          return routes.buildPage(settings.name, settings.arguments);
+        });
+      },
+    ),
   );
 }

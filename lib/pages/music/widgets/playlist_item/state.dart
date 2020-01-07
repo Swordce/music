@@ -4,15 +4,24 @@ import 'package:flutter_swiper/src/swiper_controller.dart';
 import 'package:music/pages/music/model/common_music_model.dart';
 import 'package:music/pages/music/netease_cloud/model/playlist_center_entity.dart';
 import 'package:music/store/state.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PlaylistCenterItemState
     implements Cloneable<PlaylistCenterItemState>, BaseGlobalState {
   String tag;
-  PlaylistCenterEntity playlist;
+  List<Playlists> playlist;
+  RefreshController refreshController;
+  int pageNum;
+  int pageSize;
+  int updateTime;
 
   @override
   PlaylistCenterItemState clone() {
     return PlaylistCenterItemState()
+      ..updateTime = updateTime
+      ..pageNum = pageNum
+      ..pageSize = pageSize
+      ..refreshController = refreshController
       ..isInitSwiperIndex = isInitSwiperIndex
       ..pageIndex = pageIndex
       ..swiperStartIndex = swiperStartIndex
@@ -89,5 +98,7 @@ class PlaylistCenterItemState
 PlaylistCenterItemState initState(Map<String, dynamic> args) {
   PlaylistCenterItemState newState = PlaylistCenterItemState();
   newState.tag = args['tag'];
+  newState.pageSize = 15;
+  newState.pageNum = 0;
   return newState;
 }

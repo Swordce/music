@@ -14,7 +14,13 @@ Reducer<PlaylistCenterItemState> buildReducer() {
 
 PlaylistCenterItemState _onUpdatePlaylist(PlaylistCenterItemState state, Action action) {
   final PlaylistCenterItemState newState = state.clone();
-  newState.playlist = action.payload;
+  bool isload = action.payload['isLoad'];
+  if(isload) {
+    newState.playlist = action.payload['playlist'];
+  }else{
+    newState.playlist.addAll(action.payload['playlist']);
+  }
+  newState.updateTime = action.payload['time'];
   return newState;
 }
 
