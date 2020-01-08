@@ -3,9 +3,8 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter_swiper/src/swiper_controller.dart';
 import 'package:music/pages/music/model/common_music_model.dart';
 import 'package:music/pages/music/netease_cloud/playlist_detail/state.dart';
-import 'package:music/pages/music/state.dart';
+import 'package:music/pages/music/widgets/common_playlist_center/state.dart';
 import 'package:music/pages/music/widgets/common_rank/state.dart';
-import 'package:music/pages/music/widgets/playlist_center/state.dart';
 import 'package:music/store/state.dart';
 
 class CommonPlaylistState

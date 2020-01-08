@@ -13,8 +13,12 @@ Effect<PlaylistCenterItemState> buildEffect() {
     PlaylistCenterItemAction.refresh: _onRefresh,
     PlaylistCenterItemAction.loadMore: _onLoadMore,
     Lifecycle.initState:_onInit,
-
+    Lifecycle.dispose:_onDispose,
   });
+}
+
+void _onDispose(Action action, Context<PlaylistCenterItemState> ctx) {
+  ctx.state.refreshController.dispose();
 }
 
 void _onInit(Action action, Context<PlaylistCenterItemState> ctx) {
@@ -31,11 +35,15 @@ void _loadData(Context<PlaylistCenterItemState> ctx,String updateTime) async {
     if(listEntity != null && listEntity.playlists.length > 0) {
       ctx.dispatch(PlaylistCenterItemActionCreator.onUpdatePlaylist({'playlist':listEntity.playlists,'time':listEntity.lasttime,'isLoad':updateTime.isEmpty?true:false}));
       GlobalStore.store.dispatch(GlobalActionCreator.updatePlaylistCenterBgImageUrl(listEntity.playlists[0].coverImgUrl));
-      ctx.state.refreshController.loadComplete();
-      return;
     }
+    if(listEntity.more) {
+      ctx.state.refreshController.loadComplete();
+    }else{
+      ctx.state.refreshController.loadNoData();
+    }
+  }else{
+    ctx.state.refreshController.loadFailed();
   }
-  ctx.state.refreshController.loadNoData();
 }
 
 void _onRefresh(Action action,Context<PlaylistCenterItemState> ctx) async {

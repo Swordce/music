@@ -5,6 +5,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:music/pages/music/model/common_music_model.dart';
+import 'package:music/pages/music/netease_cloud/model/play_list_detail_entity.dart';
+import 'package:music/pages/music/netease_cloud/playlist_detail/action.dart';
 import 'package:music/pages/music/widgets/flexible_sliverappbar_detail_view.dart';
 import 'package:music/pages/music/widgets/widget_common_playlist_view.dart';
 import 'package:music/pages/music/widgets/widget_common_header_bottom.dart';
@@ -109,11 +111,12 @@ class CommonPlaylistHeaderView extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 _buildHeaderItem('assets/images/icon_comment.png',
-                    music.commentCount.toString()),
+                    music.commentCount.toString(), 0),
                 _buildHeaderItem('assets/images/icon_share.png',
-                    music.shareCount.toString()),
-                _buildHeaderItem('assets/images/icon_download.png', '下载'),
-                _buildHeaderItem('assets/images/icon_multi_select.png', '多选'),
+                    music.shareCount.toString(), 1),
+                _buildHeaderItem('assets/images/icon_download.png', '下载', 2),
+                _buildHeaderItem(
+                    'assets/images/icon_multi_select.png', '多选', 3),
               ],
             ),
           )
@@ -122,21 +125,36 @@ class CommonPlaylistHeaderView extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaderItem(String imgPath, String name) {
+  Widget _buildHeaderItem(String imgPath, String name, int type) {
     return Expanded(
       flex: 1,
-      child: Column(
-        children: <Widget>[
-          Image.asset(
-            imgPath,
-            width: 24,
-            height: 24,
-          ),
-          Container(
-            height: 5,
-          ),
-          Text(name)
-        ],
+      child: GestureDetector(
+        child: Column(
+          children: <Widget>[
+            Image.asset(
+              imgPath,
+              width: 24,
+              height: 24,
+            ),
+            Container(
+              height: 5,
+            ),
+            Text(name)
+          ],
+        ),
+        onTap: () {
+          switch(type){
+            case 0:
+              dispatch(PlaylistDetailActionCreator.onJumpToComment());
+              break;
+            case 1:
+              break;
+            case 2:
+              break;
+            case 3:
+              break;
+          }
+        },
       ),
     );
   }

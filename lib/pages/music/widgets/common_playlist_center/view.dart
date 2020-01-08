@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:music/pages/music/widgets/playlist_item/page.dart';
+import 'package:music/pages/music/widgets/common_playlist_center_item/page.dart';
 import 'package:music/widgets/keepalive_widget.dart';
 
 import 'state.dart';

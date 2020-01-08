@@ -1,4 +1,5 @@
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutter/cupertino.dart' hide Action;
 import 'package:music/pages/music/model/common_music_model.dart';
 import 'package:music/pages/music/netease_cloud/model/music_url_entity.dart';
 import 'package:music/pages/music/netease_cloud/model/netease_network_utils.dart';
@@ -14,21 +15,22 @@ Effect<PlaylistDetailState> buildEffect() {
   return combineEffects(<Object, Effect<PlaylistDetailState>>{
     PlaylistDetailAction.action: _onAction,
     Lifecycle.initState: _onInit,
-    Lifecycle.dispose:_onDispose,
+    Lifecycle.dispose: _onDispose,
     PlaylistDetailAction.changeMusic: _onChangeMusic,
     PlaylistDetailAction.loadMusicUrl: _loadMusicUrl,
     PlaylistDetailAction.updateMusicPlayList: _onUpdateMusicPlayList,
-    PlaylistDetailAction.updateIndex:_updateGlobalIndex,
+    PlaylistDetailAction.updateIndex: _updateGlobalIndex,
+    PlaylistDetailAction.jumpToComment: _onJumpToComment,
   });
 }
-
 
 void _onDispose(Action action, Context<PlaylistDetailState> ctx) {
   GlobalStore.store.dispatch(GlobalActionCreator.onIsBackToMain(true));
 }
 
 void _updateGlobalIndex(Action action, Context<PlaylistDetailState> ctx) {
-  GlobalStore.store.dispatch(GlobalActionCreator.onUpdateCurrentPage(action.payload));
+  GlobalStore.store
+      .dispatch(GlobalActionCreator.onUpdateCurrentPage(action.payload));
 }
 
 //获取音乐url
@@ -50,36 +52,38 @@ void _loadMusicUrl(Action action, Context<PlaylistDetailState> ctx) async {
 ///更改当前播放的歌曲
 void _onChangeMusic(Action action, Context<PlaylistDetailState> ctx) {
   //更改播放歌单为当前歌单
-  if(ctx.state.currentPlaylistId != ctx.state.playlistId) {
+  if (ctx.state.currentPlaylistId != ctx.state.playlistId) {
     _onUpdateGlobalMusicList(ctx.state.music);
   }
 
   //播放控件未展示，直接点击歌单列表进行播放，需要先初始化swiperIndex
-  if(ctx.state.swiperStartIndex == 0 && action.payload['index'] > 0) {
+  if (ctx.state.swiperStartIndex == 0 && action.payload['index'] > 0) {
 //    ctx.dispatch(PlaylistDetailActionCreator.onInitSwiperIndex(action.payload['index']));
-    GlobalStore.store.dispatch(GlobalActionCreator.onInitSwiperIndex(action.payload['index']));
+    GlobalStore.store.dispatch(
+        GlobalActionCreator.onInitSwiperIndex(action.payload['index']));
   }
 
   //修改全局正在播放的歌曲
   GlobalStore.store.dispatch(GlobalActionCreator.onChangeMusic(action.payload));
 
   ctx.state.swiperController.move(action.payload['index']);
-
 }
 
 void _onInit(Action action, Context<PlaylistDetailState> ctx) async {
-  initSwiperIndex(action,ctx);
+  initSwiperIndex(action, ctx);
   _onLoadPlaylist(action, ctx);
 }
 
 ///初始化swiperIndex
 void initSwiperIndex(Action action, Context<PlaylistDetailState> ctx) {
   GlobalStore.store.dispatch(GlobalActionCreator.onIsBackToMain(false));
-  GlobalStore.store.dispatch(GlobalActionCreator.onInitSwiperIndex(ctx.state.currentIndex));
+  GlobalStore.store
+      .dispatch(GlobalActionCreator.onInitSwiperIndex(ctx.state.currentIndex));
 }
 
 ///加载歌单列表
 void _onLoadPlaylist(Action action, Context<PlaylistDetailState> ctx) async {
+  println(ctx.state.playlistId);
   PlayListDetailEntity entity =
       await NeteaseCloudNetUtils.getPlaylistDetail(ctx.state.playlistId);
 
@@ -93,22 +97,24 @@ void _onLoadPlaylist(Action action, Context<PlaylistDetailState> ctx) async {
   }
 }
 
-void onChangePlayinglist(MusicModel musicModel, Context<PlaylistDetailState> ctx) async {
+void onChangePlayinglist(
+    MusicModel musicModel, Context<PlaylistDetailState> ctx) async {
   if (ctx.state.playlistId != ctx.state.currentPlaylistId) {
     String ids = '';
     for (int i = 0; i < musicModel.musicList.length; i++) {
       ids = ids + '${musicModel.musicList[i].musicId},';
     }
-    ids = ids.substring(0, ids.length - 1);
-    if (ids.isNotEmpty) {
-      MusicUrlEntity urlEntity =
-          await NeteaseCloudNetUtils.getMusicUrl(ids);
-      if (urlEntity != null) {
-        MusicModel models = updateMusicUrlList(urlEntity.data, musicModel);
-        if (ctx.state.globalMusic == null) {
-          _onUpdateGlobalMusicList(models);
+    if (ids.length > 0) {
+      ids = ids.substring(0, ids.length - 1);
+      if (ids.isNotEmpty) {
+        MusicUrlEntity urlEntity = await NeteaseCloudNetUtils.getMusicUrl(ids);
+        if (urlEntity != null) {
+          MusicModel models = updateMusicUrlList(urlEntity.data, musicModel);
+          if (ctx.state.globalMusic == null) {
+            _onUpdateGlobalMusicList(models);
+          }
+          ctx.dispatch(PlaylistDetailActionCreator.onLoadPlayList(models));
         }
-        ctx.dispatch(PlaylistDetailActionCreator.onLoadPlayList(models));
       }
     }
   }
@@ -171,6 +177,16 @@ MusicModel _getMusicModel(PlayListDetailPlaylist music) {
       shareCount,
       trackCount,
       modelList);
+}
+
+void _onJumpToComment(Action action, Context<PlaylistDetailState> ctx) {
+  Navigator.of(ctx.context).pushNamed('common_comment_page', arguments: {
+    'playlistId': ctx.state.music.playlistId,
+    'coverImageUrl': ctx.state.music.coverImgUrl,
+    'nickName': ctx.state.music.nickname,
+    'title': ctx.state.music.title,
+    'commentCount':ctx.state.music.commentCount
+  });
 }
 
 void _onAction(Action action, Context<PlaylistDetailState> ctx) {}

@@ -5,6 +5,7 @@ import 'package:music/application.dart';
 import 'package:music/pages/music/netease_cloud/model/music_url_entity.dart';
 import 'package:music/pages/music/netease_cloud/model/playlist_center_category_entity.dart';
 import 'package:music/pages/music/netease_cloud/model/playlist_center_entity.dart';
+import 'package:music/pages/music/netease_cloud/model/playlist_comment_entity.dart';
 import 'package:music/pages/music/netease_cloud/model/rank_entity.dart';
 import 'package:music/utils/net_utils.dart';
 
@@ -14,6 +15,16 @@ import 'recommend_playlist_entity.dart';
 import 'user_entity.dart';
 
 class NeteaseCloudNetUtils {
+
+  //歌单评论
+  static Future<PlaylistCommentEntity> getPlaylistComment(String id,int currentPage) async {
+    var response = await NetUtils.getInstance().get('/comment/playlist',data: {'id':id,'limit':currentPage * 20});
+    if(response != null) {
+      final jsonMap = json.decode(response.data);
+      return PlaylistCommentEntity.fromJson(jsonMap);
+    }
+    return null;
+  }
 
   //排行榜
   static Future<RankEntity> getRanklist() async {
