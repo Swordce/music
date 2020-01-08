@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:music/pages/music/model/common_music_model.dart';
 import 'package:music/pages/music/netease_cloud/model/play_list_detail_entity.dart';
 import 'package:music/pages/music/netease_cloud/playlist_detail/action.dart';
@@ -117,8 +118,8 @@ class CommonPlaylistHeaderView extends StatelessWidget {
                     music.shareCount.toString(), 1),
                 _buildHeaderItem(
                     context, 'assets/images/icon_download.png', '下载', 2),
-                _buildHeaderItem(
-                    context, 'assets/images/icon_multi_select.png', '多选', 3),
+//                _buildHeaderItem(
+//                    context, 'assets/images/icon_multi_select.png', '多选', 3),
               ],
             ),
           )
@@ -153,6 +154,7 @@ class CommonPlaylistHeaderView extends StatelessWidget {
               showShareDialog(context);
               break;
             case 2:
+              showDownloadDialog(context);
               break;
             case 3:
               break;
@@ -178,11 +180,13 @@ class CommonPlaylistHeaderView extends StatelessWidget {
             children: <Widget>[
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 15),
-                child: _buildShareItem('assets/images/icon_netease_line.png', '云音乐动态', 5),
+                child: _buildShareItem(
+                    'assets/images/icon_netease_line.png', '云音乐动态', 5),
               ),
               Padding(
                 padding: EdgeInsets.only(left: 10, right: 20),
-                child: _buildShareItem('assets/images/icon_message.png', '私信', 6),
+                child:
+                    _buildShareItem('assets/images/icon_message.png', '私信', 6),
               ),
               _buildShareItem('assets/images/icon_link.png', '复制链接', 7),
             ],
@@ -193,12 +197,13 @@ class CommonPlaylistHeaderView extends StatelessWidget {
             margin: EdgeInsets.only(top: 20, bottom: 20),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 20,right: 20),
+            padding: EdgeInsets.only(left: 20, right: 20),
             child: GridView.count(
               crossAxisCount: 5,
               childAspectRatio: 0.8,
               children: <Widget>[
-                _buildShareItem('assets/images/icon_wechat_circle.png', '微信朋友圈', 0),
+                _buildShareItem(
+                    'assets/images/icon_wechat_circle.png', '微信朋友圈', 0),
                 _buildShareItem('assets/images/icon_wechat.png', '微信好友', 1),
                 _buildShareItem('assets/images/icon_qzone.png', 'QQ空间', 2),
                 _buildShareItem('assets/images/icon_qq.png', 'QQ好友', 3),
@@ -222,7 +227,8 @@ class CommonPlaylistHeaderView extends StatelessWidget {
               width: 56,
               height: 56,
               decoration: BoxDecoration(
-                  color: Colors.black12, borderRadius: BorderRadius.circular(28)),
+                  color: Colors.black12,
+                  borderRadius: BorderRadius.circular(28)),
             ),
             Image.asset(
               icon,
@@ -244,7 +250,7 @@ class CommonPlaylistHeaderView extends StatelessWidget {
     );
   }
 
-  //分享弹框
+  ///分享弹框
   void showShareDialog(context) {
     showModalBottomSheet(
         context: context,
@@ -255,6 +261,118 @@ class CommonPlaylistHeaderView extends StatelessWidget {
                 borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
             height: 275,
             child: _buildDialogView(),
+          );
+        });
+  }
+
+  ///下载弹框
+  void showDownloadDialog(context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return SimpleDialog(
+            title: Text(
+              '选择下载音质',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+            titlePadding: EdgeInsets.all(20),
+            elevation: 5,
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(5))),
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  showDownloadTipsDialog(context);
+                },
+                child: Container(
+                  height: 45,
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(left: 20),
+                  child: Text(
+                    '标准',
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  showDownloadTipsDialog(context);
+                },
+                child: Container(
+                  height: 45,
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(left: 20),
+                  child: Text(
+                    '较高',
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  showDownloadTipsDialog(context);
+                },
+                child: Container(
+                  height: 45,
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(left: 20),
+                  child: Text(
+                    '极高',
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                  showDownloadTipsDialog(context);
+                },
+                child: Container(
+                  height: 45,
+                  alignment: Alignment.centerLeft,
+                  margin: EdgeInsets.only(left: 20),
+                  child: Text(
+                    '无损音质',
+                    style: TextStyle(fontSize: 15, color: Colors.black),
+                  ),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+
+  void showDownloadTipsDialog(context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            titlePadding: EdgeInsets.all(0),
+            content: Text('将下载${music.musicList.length}首歌曲'),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text(
+                  "取消",
+                  style: TextStyle(color: Colors.red, fontSize: 15),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              new FlatButton(
+                child: new Text(
+                  "下载",
+                  style: TextStyle(color: Colors.red, fontSize: 15),
+                ),
+                onPressed: () {
+                  Fluttertoast.showToast(msg: '下载中...');
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
           );
         });
   }
