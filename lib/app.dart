@@ -32,9 +32,9 @@ Widget createApp() {
       'playlist_center_page': PlaylistCenterPage(),
       'playlist_center_item_page': PlaylistCenterItemPage(),
       'test_page': TestPagePage(),
-      'common_rank_page':RankPage(),
-      'common_comment_page':CommentPage(),
-      'common_comment_replied_page':CommentRepliedPage(),
+      'common_rank_page': RankPage(),
+      'common_comment_page': CommentPage(),
+      'common_comment_replied_page': CommentRepliedPage(),
     },
     visitor: (String path, Page<Object, dynamic> page) {
       /// 满足条件 Page<T> ，T 是 GlobalBaseState 的子类。
@@ -93,36 +93,31 @@ Widget createApp() {
   );
 
   return RefreshConfiguration(
-    headerBuilder:()=> ClassicHeader(),
-    footerBuilder:()=> CustomFooter(
-      builder: (BuildContext context,LoadStatus mode){
-        Widget body ;
-        if(mode==LoadStatus.idle){
-          body =  Text("上拉加载更多");
-        }
-        else if(mode==LoadStatus.loading){
-          body =  CupertinoActivityIndicator();
-        }
-        else if(mode == LoadStatus.failed){
+    headerBuilder: () => ClassicHeader(),
+    footerBuilder: () => CustomFooter(
+      builder: (BuildContext context, LoadStatus mode) {
+        Widget body;
+        if (mode == LoadStatus.idle) {
+          body = Text("上拉加载更多");
+        } else if (mode == LoadStatus.loading) {
+          body = CupertinoActivityIndicator();
+        } else if (mode == LoadStatus.failed) {
           body = Text("加载失败");
-        }
-        else if(mode == LoadStatus.canLoading){
+        } else if (mode == LoadStatus.canLoading) {
           body = Text("release to load more");
-        }
-        else{
+        } else {
           body = Text("没有更多了~");
         }
         return Container(
           height: 55.0,
-          child: Center(child:body),
+          child: Center(child: body),
         );
       },
     ),
     child: MaterialApp(
       title: 'MusicDemo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          primarySwatch: Colors.blue, canvasColor: Colors.transparent),
       home: routes.buildPage('main_page', {
         'pages': [
           routes.buildPage('music_page', null),

@@ -8,6 +8,7 @@ import 'state.dart';
 Widget buildView(
     PlaylistDetailState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
+    backgroundColor: Colors.white,
     body: state.music == null
         ? Container(
             alignment: Alignment.center,
