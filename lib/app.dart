@@ -9,6 +9,7 @@ import 'package:music/pages/music/widgets/common_comment_replied/page.dart';
 import 'package:music/pages/music/widgets/common_playing_music/page.dart';
 import 'package:music/pages/music/widgets/common_playlist_center/page.dart';
 import 'package:music/pages/music/widgets/common_playlist_center_item/page.dart';
+import 'package:music/pages/music/widgets/common_playlist_cover/page.dart';
 import 'package:music/pages/music/widgets/common_rank/page.dart';
 import 'package:music/pages/pre_login/page.dart';
 import 'package:music/pages/splash/page.dart';
@@ -35,6 +36,7 @@ Widget createApp() {
       'common_rank_page': RankPage(),
       'common_comment_page': CommentPage(),
       'common_comment_replied_page': CommentRepliedPage(),
+      'common_music_cover':CommonMusicCoverPage(),
     },
     visitor: (String path, Page<Object, dynamic> page) {
       /// 满足条件 Page<T> ，T 是 GlobalBaseState 的子类。

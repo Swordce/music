@@ -21,6 +21,7 @@ Effect<PlaylistDetailState> buildEffect() {
     PlaylistDetailAction.updateMusicPlayList: _onUpdateMusicPlayList,
     PlaylistDetailAction.updateIndex: _updateGlobalIndex,
     PlaylistDetailAction.jumpToComment: _onJumpToComment,
+    PlaylistDetailAction.jumpToMusicCover: _onJumpToMusiCover,
   });
 }
 
@@ -164,6 +165,8 @@ MusicModel _getMusicModel(PlayListDetailPlaylist music) {
   var commentCount = music.commentCount;
   var shareCount = music.shareCount;
   var trackCount = music.trackCount;
+  List<String>tags = [];
+  tags.addAll(music.tags);
 
   return MusicModel(
       music.id.toString(),
@@ -176,7 +179,7 @@ MusicModel _getMusicModel(PlayListDetailPlaylist music) {
       commentCount,
       shareCount,
       trackCount,
-      modelList);
+      modelList,tags);
 }
 
 void _onJumpToComment(Action action, Context<PlaylistDetailState> ctx) {
@@ -188,5 +191,15 @@ void _onJumpToComment(Action action, Context<PlaylistDetailState> ctx) {
     'commentCount':ctx.state.music.commentCount
   });
 }
+
+void _onJumpToMusiCover(Action action, Context<PlaylistDetailState> ctx) {
+  Navigator.of(ctx.context).pushNamed('common_music_cover', arguments: {
+    'coverImageUrl': ctx.state.music.coverImgUrl,
+    'tags': ctx.state.music.tags,
+    'title': ctx.state.music.title,
+    'description':ctx.state.music.description
+  });
+}
+
 
 void _onAction(Action action, Context<PlaylistDetailState> ctx) {}

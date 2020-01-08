@@ -119,7 +119,6 @@ Widget buildView(CommonPlaylistState state, Dispatch dispatch, ViewService viewS
             dispatch(CommonPlaylistActionCreator.onJumpToPlayingMusicPage());
           },
           onIndexChanged: (index) {
-            println('1111111111');
             GlobalStore.store.dispatch(GlobalActionCreator.onUpdateCurrentPage({'index':index}));
             GlobalStore.store.dispatch(GlobalActionCreator.onIsInitWidget({'isInitWidget':false,'pageIndex':index}));
 //            dispatch(PlaylistDetailActionCreator.onIsInitWidget({'isInitWidget':false,'pageIndex':index}));

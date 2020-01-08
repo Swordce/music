@@ -22,15 +22,14 @@ class CommonPlaylistHeaderView extends StatelessWidget {
   final AudioPlayer audioPlayer;
   final bool showBottoView;
 
-  CommonPlaylistHeaderView(
-      {Key key,
-      this.expandedHeight,
-      this.sigma,
-      this.copywriter,
-      this.music,
-      this.dispatch,
-      this.audioPlayer,
-      this.showBottoView})
+  CommonPlaylistHeaderView({Key key,
+    this.expandedHeight,
+    this.sigma,
+    this.copywriter,
+    this.music,
+    this.dispatch,
+    this.audioPlayer,
+    this.showBottoView})
       : super(key: key);
 
   Widget _buildHeader(context, String path, int count) {
@@ -76,33 +75,38 @@ class CommonPlaylistHeaderView extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontSize: 12)),
                         ),
-                        Icon(
-                          Icons.arrow_forward_ios,
-                          size: 10,
-                          color: Colors.white,
-                        )
+//                        Icon(
+//                          Icons.arrow_forward_ios,
+//                          size: 10,
+//                          color: Colors.white,
+//                        )
                       ],
                     ),
-                    Container(
-                        margin: EdgeInsets.only(top: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: <Widget>[
-                            Container(
-                              constraints: BoxConstraints(maxWidth: 120),
-                              margin: EdgeInsets.only(right: 20),
-                              child: Text(music.description,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontSize: 12)),
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              size: 10,
-                              color: Colors.white,
-                            )
-                          ],
-                        )),
+                    GestureDetector(
+                        onTap: () {
+                          dispatch(PlaylistDetailActionCreator.onJumpToMusicCover());
+                        },
+                        child: Container(
+                            margin: EdgeInsets.only(top: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Container(
+                                  constraints: BoxConstraints(maxWidth: 120),
+                                  margin: EdgeInsets.only(right: 20),
+                                  child: Text(music.description,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontSize: 12)),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 10,
+                                  color: Colors.white,
+                                )
+                              ],
+                            )),
+                    ),
                   ],
                 ),
               )
@@ -186,7 +190,7 @@ class CommonPlaylistHeaderView extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.only(left: 10, right: 20),
                 child:
-                    _buildShareItem('assets/images/icon_message.png', '私信', 6),
+                _buildShareItem('assets/images/icon_message.png', '私信', 6),
               ),
               _buildShareItem('assets/images/icon_link.png', '复制链接', 7),
             ],

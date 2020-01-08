@@ -10,12 +10,13 @@ class MusicModel {
   int commentCount;
   int shareCount;
   int trackCount;
+  List<String> tags;
 
   List<MusicListModel> musicList;
 
   MusicModel(this.playlistId,this.coverImgUrl, this.title, this.avatarUrl, this.nickname,
       this.description, this.playCount, this.commentCount, this.shareCount,
-      this.trackCount, this.musicList);
+      this.trackCount, this.musicList,this.tags);
 
 }
 class MusicListModel {
