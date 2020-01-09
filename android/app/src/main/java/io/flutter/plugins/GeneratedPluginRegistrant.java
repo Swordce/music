@@ -3,6 +3,7 @@ package io.flutter.plugins;
 import io.flutter.plugin.common.PluginRegistry;
 import com.ryanheise.audioservice.AudioServicePlugin;
 import xyz.luan.audioplayers.AudioplayersPlugin;
+import vn.hunghd.flutterdownloader.FlutterDownloaderPlugin;
 import com.rmawatson.flutterisolate.FlutterIsolatePlugin;
 import io.github.ponnamkarthik.toast.fluttertoast.FluttertoastPlugin;
 import io.flutter.plugins.pathprovider.PathProviderPlugin;
@@ -20,6 +21,7 @@ public final class GeneratedPluginRegistrant {
     }
     AudioServicePlugin.registerWith(registry.registrarFor("com.ryanheise.audioservice.AudioServicePlugin"));
     AudioplayersPlugin.registerWith(registry.registrarFor("xyz.luan.audioplayers.AudioplayersPlugin"));
+    FlutterDownloaderPlugin.registerWith(registry.registrarFor("vn.hunghd.flutterdownloader.FlutterDownloaderPlugin"));
     FlutterIsolatePlugin.registerWith(registry.registrarFor("com.rmawatson.flutterisolate.FlutterIsolatePlugin"));
     FluttertoastPlugin.registerWith(registry.registrarFor("io.github.ponnamkarthik.toast.fluttertoast.FluttertoastPlugin"));
     PathProviderPlugin.registerWith(registry.registrarFor("io.flutter.plugins.pathprovider.PathProviderPlugin"));

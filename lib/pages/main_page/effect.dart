@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/animation.dart';
 import 'package:flutter/cupertino.dart' hide Action;
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:music/pages/music/utils/audio_player_utils.dart';

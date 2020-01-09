@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:music/app.dart';
 
-void main() => runApp(createApp());
+void main() async {
+  await FlutterDownloader.initialize();
+  runApp(createApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.

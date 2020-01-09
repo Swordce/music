@@ -147,7 +147,9 @@ Widget buildView(
             alignment: Alignment.bottomCenter,
             margin: EdgeInsets.only(bottom: 30),
             child: OutlineButton(
-              onPressed: (){},
+              onPressed: (){
+                dispatch(CommonMusicCoverActionCreator.onSaveCover());
+              },
               borderSide: BorderSide(
                   color: Colors.white
               ),
